@@ -1,0 +1,56 @@
+Usage: ant [commands] [properties]
+    Commands:
+        run         runs your tests
+                    requires:
+                     * input.dir or input.files
+                     * output.dir
+
+        generate    generate standalone tests under gen.dir
+
+        report      generate report under given output.dir
+
+        unittest    runs unittest, this will need a php enabled webserver
+                    listening on port 80, serving the unit test pages.
+                    eg. ln -s `pwd`/test /opt/oss/share/apache2/htdocs/
+
+    Properties:
+        -Dinput.dir=[value]     The input files will be picked up from here
+          -Dpattern=[value]     Specify the pattern of files to be picked up
+
+        -Dinput.files=[values]  Comma seperated values of input files to run
+
+        -Doutput.dir=[value]    Output directory where reports are generated
+
+        -Ddebug.level=[value]   Specify the dubug level.
+                                - Valid values are:
+                                    ERROR, WARNING, INFO, DEBUG, CONSOLE, CRAZY
+                                - Console by default gets WARNING and ERROR
+                                    unless level CONSOLE or CRAZY is specified
+                                - CRAZY as it suggests spews out too much log
+                                    dare to use ? ;)
+                                - Default log is [DEBUG]
+                                - Log name is case-*insensitive* DEBUG=debug
+                                - Typo in specifying log name defaults to DEBUG
+
+        -Denable.ui=true        To enable simple browser mock ui showing the
+                                current progress of the test run
+
+        -Dno.easy.https=true    To disable using blind https socket factory.
+                                This way all certificates have to be validated.
+
+        -Denable.caching=true   Enable caching of js files between requests
+
+        -Dgen.dir=[dir]         Directory to generate standalone tests. used with 
+                                "generate" action
+
+        Properties (input.dir or input.files) and output.dir is mandatory,
+        unless running the "unittest" command
+
+    Example:
+        ant run report -Dinput.dir=/home/myhome/testfiles/ \
+                       -Dpattern=a*.xml \
+                       -Doutput.dir=/tmp/report-here
+
+           This will run the tests which match the pattern "a*.xml" under
+           the specified input directory, and will also generate "report"
+           under the output directory specified.

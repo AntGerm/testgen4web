@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.40.0">
+    <actions>
+        <action type="goto" refresh="true" step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://localhost:9099/test/unittest/htmlpages/form-elements/index.html]]></value>
+        </action>
+        <action type="verify-title" step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="check" step="2">
+            <xpath><![CDATA[*/FORM[@NAME="test"]/INPUT[@TYPE="checkbox" and @NAME="check2"]]]></xpath>
+            <value><![CDATA[true]]></value>
+        </action>
+        <action type="check" step="3">
+            <xpath><![CDATA[*/FORM[@NAME="test"]/INPUT[@TYPE="checkbox" and @NAME="check1"]]]></xpath>
+            <value><![CDATA[false]]></value>
+        </action>
+        <action type="click" step="4">
+            <xpath><![CDATA[*/FORM[@NAME="test"]/INPUT[@NAME="radiogroup1"and @VALUE="rg1v2"]]]></xpath>
+            <value><![CDATA[radiogroup1]]></value>
+        </action>
+        <action type="fill" step="5">
+            <xpath><![CDATA[*/FORM[@NAME="test"]/INPUT[@TYPE="text" and @NAME="textfield1"]]]></xpath>
+            <value><![CDATA[text1-test]]></value>
+        </action>
+        <action type="click" refresh="true" step="6">
+            <xpath><![CDATA[*/FORM[@NAME="test"]/INPUT[@NAME="submit-button"and @VALUE="Submit Thro' Me"]]]></xpath>
+            <value><![CDATA[submit-button]]></value>
+        </action>
+        <action type="verify-title" step="7">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[onrg1v2text1-test]]></value>
+        </action>
+    </actions>
+</tg4w>

@@ -1,0 +1,135 @@
+package $packageName;
+
+import java.util.*;
+import java.io.*;
+
+import com.spike.tg4w.common.util.*;
+import com.spike.tg4w.common.file.*;
+import com.spike.tg4w.common.xpath.*;
+import com.spike.tg4w.htmlunit.*;
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.httpclient.contrib.ssl.EasySSLProtocolSocketFactory;
+
+public class $javaName extends HtmlUnitInterpreter {
+    private static final String frozenFile = "$frozenFilename";
+    InterpreterConfig config = null;
+    public $javaName(InterpreterConfig config) {
+        super(config);
+        this.config = config;
+    }
+
+    public void run() throws Exception {
+        File testFile = new File(frozenFile);
+        config.logger.testStart(testFile.getAbsolutePath());
+
+        InterpreterContext context = new InterpreterContext(this.config);
+        context.setDebugDir(this.config.debugDir);
+        context.setLogger(this.config.logger);
+        context.clear();
+        context.currentFile = testFile.getAbsolutePath();
+
+        if (this.config.easyHttps) {
+            this.config.logger.info("Enabling EasySSL");
+            Protocol easyhttps = new Protocol("https", new EasySSLProtocolSocketFactory(), 443);
+            Protocol.registerProtocol("https", easyhttps);
+        }
+
+        Action[] actions = context.loadFile(testFile.getAbsolutePath());
+        Action action  = null;
+        int ac = -1;
+        Action currentContainer = null;
+
+#foreach ($action in $actions)
+        ac = $action.getActionIndex();
+        // action = actions[ac];
+        action = fixAction(context, actions[ac]);
+        this.config.logger.stepStart(action, ac);
+            // set action in context
+        context.currentAction = action;
+        context.currentActionCount = ac;
+#if ($action.label != "")
+// action has a label
+label_$action.label:
+#end
+#if ($action.type == "goto")
+        handleAction_goto_url(context, action);
+#elseif ($action.type == "verify-title")
+        handleAction_verify_title(context, action);
+#elseif ($action.isVariableAction())
+        handleAction_setvar(context, action);
+#elseif ($action.type == "fill")
+        handleAction_fill(context, action);
+#elseif ($action.type == "click")
+        handleAction_click(context, action);
+#elseif ($action.isLoopContainer())
+        while(evaluateContainer(context, action)) {
+            context.pushContainer(action);
+#elseif ($action.isEndContainer())
+            Action container = context.popContainer();
+            Action.DatasetLoop dsl = container.isDatasetLoop();
+            // loop - increment if it is a dataset loop
+            if (dsl != null) {
+                RuntimeDataset ds = context.getDataset(dsl.dsname);
+                ds.incrementLoop();
+            }
+            // does not matter if we get out of the loop
+            // the action will be reset
+            action = container;
+        }
+#elseif ($action.type == "wait-for-ms")
+    try { Thread.sleep($action.value); } catch (Exception e) { /* ignore */ }
+#elseif ($action.type == "assert-text-exists")
+        handleAction_assert_text_exists(context, action);
+#elseif ($action.type == "assert-text-does-not-exist")
+        handleAction_assert_text_not_exists(context, action);
+#elseif ($action.isGotoAction())
+$callback.warning("Standalone tests for recordings with 'goto' element's is not possible. Generating one anyway!.");
+        if (handleAction_goto(context, action) != -1) {
+#set ($gotodetails = ${action.getGotoDetails()})
+            // goto label_${gotodetails.getLabel()};
+            if (true) {
+                throw new RuntimeException("goto actions are not supported in standalone tests. since java does not support 'goto'!");
+            }
+        }
+#elseif ($action.type == "select")
+        handleAction_select(context, action);
+#elseif ($action.type == "check")
+        handleAction_check(context, action);
+#elseif ($action.type == "alert")
+        this.config.logger.warning("TODO: Expecting alert around here: '" + action.value + "'");
+#elseif ($action.type == "confirm")
+        this.config.logger.info("TODO: Expecting confirm around here: '" + action.xpath + "'. Should click ok? : " + action.value);
+#else
+call_unsupported_action_${action.type}(); // meant to catch during compile time
+#end
+        this.config.logger.stepEnd(ac);
+#end
+    }
+
+    public static void runMe(String args[]) throws IOException {
+        InterpreterConfig config = generateConfigFromCmdLineArgs(args, /* default logger */ true);
+
+        $javaName instance = new $javaName(config);
+        try {
+            instance.run();
+        } catch (Exception e) {
+            System.out.println("------------- ERROR ---------------- ");
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            System.out.println("------------------------------------ ");
+        } finally {
+            config.logger.testEnd(null);
+            config.logger.finalizeResults();
+        }
+    }
+
+    public static void main(String args[]) {
+        try {
+            runMe(args);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+// set ft=java

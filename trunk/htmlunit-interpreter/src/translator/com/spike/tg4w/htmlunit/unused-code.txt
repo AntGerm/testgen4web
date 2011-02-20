@@ -1,0 +1,31 @@
+                    if (false && elementName.equalsIgnoreCase("FORM")) {
+                        List forms = page.getForms();
+                        if (forms == null || forms.size() == 0) {
+                            logger.fatal("No forms found on page!");
+                            return null;
+                        } else {
+                            if (predicates.length == 1) {
+                                TG4W_XPathPredicate predicate = predicates[0];
+                                if (predicate.isNumber()) {
+                                    int index = Integer.parseInt(predicate.getValue());
+                                    if (index >= forms.size()) {
+                                        logger.fatal("forms length expected >= " + index + ", is " + forms.size());
+                                    }
+                                    elementFound = (HtmlElement) forms.get(index - 1);
+                                } else if (predicate.isName()) {
+                                    elementFound = page.getFormByName(predicate.getValue());
+                                    if (elementFound == null) {
+                                        logger.fatal("could not find form with name:" + predicate.getValue());
+                                        return null;
+                                    }
+                                } else {
+                                    logger.fatal("forms with predicates other than " 
+                                            + "number or @name is not supported!");
+                                    return null;
+                                }
+                            } else {
+                                logger.fatal("forms with multiple predicates are not supported!");
+                                return null;
+                            }
+                        }
+                    } else 

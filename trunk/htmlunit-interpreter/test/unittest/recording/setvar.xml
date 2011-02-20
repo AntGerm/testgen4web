@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.43.0">
+    <datasets>
+    </datasets>
+    <actions>
+        <action type="goto" refresh="." window="." step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://localhost:9099/test/unittest/htmlpages/dataset/index.php]]></value>
+        </action>
+        <action type="setvar-loopcount-num" refresh="" window="." step="1">
+            <xpath><![CDATA[0;]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" window="." step="2">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[You searched for Nothing!]]></value>
+        </action>
+        <action type="fill" label="fill" window="." step="3">
+            <xpath><![CDATA[*/FORM[1]/INPUT[@TYPE="text" and @NAME="q"]]]></xpath>
+            <value><![CDATA[Test ${loopcount}]]></value>
+        </action>
+        <action type="click" refresh="." window="." step="4">
+            <xpath><![CDATA[*/FORM[1]/INPUT[@TYPE="submit" and @VALUE="Submit"]]]></xpath>
+            <value><![CDATA[null]]></value>
+        </action>
+        <action type="verify-title" window="." step="5">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[You searched for Test ${loopcount}!]]></value>
+        </action>
+        <action type="setvar-loopcount-num" refresh="" window="." step="6">
+            <xpath><![CDATA[loopcount + 1;]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="goto-fill-bool-eq" refresh="" window="." step="7">
+            <xpath><![CDATA[loopcount < 3;]]></xpath>
+            <value><![CDATA[true]]></value>
+        </action>
+    </actions>
+</tg4w>

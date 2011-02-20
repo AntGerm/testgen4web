@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.40.1">
+    <actions>
+        <action type="goto" refresh="true" step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://localhost:9099/test/unittest/htmlpages/multi-select/multi-sel.php]]></value>
+        </action>
+        <action type="verify-title" step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Car survey]]></value>
+        </action>
+        <action type="assert-text-exists" step="2">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[enter your favorite colors]]></value>
+        </action>
+        <action type="assert-text-does-not-exist" step="3">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Error]]></value>
+        </action>
+    </actions>
+</tg4w>

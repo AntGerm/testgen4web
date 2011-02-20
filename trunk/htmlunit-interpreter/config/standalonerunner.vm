@@ -1,0 +1,30 @@
+package $packageName;
+
+import java.util.*;
+import java.io.*;
+
+import com.spike.tg4w.common.util.*;
+import com.spike.tg4w.common.file.*;
+import com.spike.tg4w.common.xpath.*;
+import com.spike.tg4w.htmlunit.*;
+import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.commons.httpclient.contrib.ssl.EasySSLProtocolSocketFactory;
+
+public class MasterRunner {
+    public static void main(String[] args) throws Exception {
+        InterpreterConfig config = HtmlUnitInterpreter.generateConfigFromCmdLineArgs(args, true);
+
+        try {
+#foreach ($instancename in $instancenames)
+            try {
+                $instancename instance_ = new $instancename(config);
+                instance_.run();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+#end
+        } finally {
+            config.logger.finalizeResults();
+        }
+    }
+}

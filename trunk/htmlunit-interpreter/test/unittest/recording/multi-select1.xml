@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.40.0">
+    <actions>
+        <action type="goto" refresh="true" step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://localhost:9099/test/unittest/htmlpages/multi-select/multi-sel.php]]></value>
+        </action>
+        <action type="verify-title" step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Car survey]]></value>
+        </action>
+        <action type="select" step="2">
+            <xpath><![CDATA[*/FORM[1]/SELECT[@NAME="colors[]"]]]></xpath>
+            <value><![CDATA[gr%2C%2Ceen,orange,ye%2Cll%2Cow]]></value>
+        </action>
+        <action type="click" refresh="true" step="3">
+            <xpath><![CDATA[*/FORM[1]/INPUT[@TYPE="submit"and @VALUE="These are my choices !"]]]></xpath>
+            <value><![CDATA[null]]></value>
+        </action>
+        <action type="verify-title" step="4">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Car survey gr,,eenorangeye,ll,ow]]></value>
+        </action>
+    </actions>
+</tg4w>

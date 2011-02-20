@@ -1,0 +1,16 @@
+# match with endswith
+-endswith:lop-dataset.xml
+ds1=test/unittest/htmlpages/dataset/sample.csv
+
+# match with contains
+-contains:loop-dataset.xml
+ds1=test/unittest/htmlpages/dataset/sample.csv
+
+# match with java regexp
+# regexp help and examples: http://java.sun.com/j2se/1.4.2/docs/api/java/util/regex/Pattern.html
+-matches:^(.*)loop-dataset.xml$
+ds1=test/unittest/htmlpages/dataset/sample.csv
+
+# exact match
+-is:/opt/dev.spike/testgen4web/htmlunit-interpreter/test/unittest/recording/loop-dataset.xml
+ds1=test/unittest/htmlpages/dataset/sample.csv

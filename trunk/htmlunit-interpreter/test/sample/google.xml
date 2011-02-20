@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.40.0">
+    <actions>
+        <action type="goto" refresh="true" step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://www.google.com/]]></value>
+        </action>
+        <action type="verify-title" step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Google]]></value>
+        </action>
+        <action type="fill" step="2">
+            <xpath><![CDATA[*/FORM[@NAME="f"]/*/INPUT[@NAME="q"]]]></xpath>
+            <value><![CDATA[testgen4web]]></value>
+        </action>
+        <action type="click" refresh="true" step="3">
+            <xpath><![CDATA[*/FORM[@NAME="f"]/*/INPUT[@NAME="btnG"and @VALUE="Google Search"]]]></xpath>
+            <value><![CDATA[btnG]]></value>
+        </action>
+        <action type="verify-title" step="4">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[testgen4web - Google Search]]></value>
+        </action>
+        <action type="click" refresh="true" step="5">
+            <xpath><![CDATA[*/A[@CDATA="Projects:TestGen4Web - Spike Developer Zone"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="6">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Projects:TestGen4Web - Spike Developer Zone]]></value>
+        </action>
+        <action type="fill" step="7">
+            <xpath><![CDATA[*/FORM[@ID="searchform"]/INPUT[@ID="searchInput"]]]></xpath>
+            <value><![CDATA[testgen4j]]></value>
+        </action>
+        <action type="click" refresh="true" step="8">
+            <xpath><![CDATA[*/A[@CDATA="go"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="9">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Search results - Spike Developer Zone]]></value>
+        </action>
+        <action type="click" refresh="true" step="10">
+            <xpath><![CDATA[*/A[@CDATA="Projects:testgen4j"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="11">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Projects:testgen4j - Spike Developer Zone]]></value>
+        </action>
+    </actions>
+</tg4w>
