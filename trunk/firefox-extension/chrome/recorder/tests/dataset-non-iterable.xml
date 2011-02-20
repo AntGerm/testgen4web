@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="1.0.2">
+    <datasets>
+        <dataset id="props" xpath="/properties" file="TG4W_TEST/test.prop" type="xml" iterable="false"/>
+    </datasets>
+    <actions>
+        <action type="goto" refresh="." window="." step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://www.echoecho.com/htmlforms05.htm]]></value>
+        </action>
+        <action type="verify-title" window="." step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Forms : Text Field - HTML Tutorial]]></value>
+        </action>
+        <action type="fill" window="." step="2">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@TYPE="text" and @NAME="shorttext"]]]></xpath>
+            <value><![CDATA[${props.prop1/.}]]></value>
+        </action>
+        <action type="fill" window="." step="3">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@TYPE="text" and @NAME="shorttext"]]]></xpath>
+            <value><![CDATA[${props.prop2/.}]]></value>
+        </action>
+        <action type="fill" window="." step="4">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@TYPE="text" and @NAME="shorttext"]]]></xpath>
+            <value><![CDATA[${props.prop1/.}]]></value>
+        </action>
+    </actions>
+</tg4w>

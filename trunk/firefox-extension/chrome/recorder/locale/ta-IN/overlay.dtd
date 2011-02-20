@@ -1,0 +1,71 @@
+<!ENTITY menu.label.Verify "சரிபார்">
+<!ENTITY menu.label.VerifySelectedText "உரையை உறுதிசெய்">
+<!ENTITY menu.label.VerifyPageTitle "பக்கத்தலைப்பை உறுதிசெய்">
+<!ENTITY menu.label.AssertTextNotPresent "உரையில்லை என உறுதிசெய்">
+<!ENTITY menu.label.Debug "பிழைநீக்கு">
+<!ENTITY menu.label.WhatIsThis "என்ன இது?">
+<!ENTITY menu.label.FindMe "கண்டுபிடி">
+<!ENTITY button.tooltip.ReviewEditSteps "அடிகளை சரிபார்/தொகு">
+<!ENTITY button.label.ReviewEditSteps "அடிகளைத் தொகு">
+<!ENTITY button.tooltip.Debug "பிழைநீக்கு">
+<!ENTITY button.label.Debug "பிழைநீக்கு">
+<!ENTITY button.tooltip.Record "பதியத் தொடங்கு">
+<!ENTITY button.label.Record "பதிவுசெய்">
+<!ENTITY button.tooltip.Stop "நிறுத்து">
+<!ENTITY button.label.Stop "நிறுத்து">
+<!ENTITY button.tooltip.Pause "பொறு">
+<!ENTITY button.label.Pause "பொறு">
+<!ENTITY button.tooltip.Play "ஓட்டுக">
+<!ENTITY button.label.Play "ஓட்டுக">
+<!ENTITY button.tooltip.Save "சேமி">
+<!ENTITY button.label.Save "சேமி">
+<!ENTITY button.tooltip.Open "பதிவுகளை திற">
+<!ENTITY button.label.Open "திற">
+<!ENTITY button.tooltip.Upload "பதிவுகளை சேவையகத்திற்கு வலையேற்றுக">
+<!ENTITY button.label.Upload "வலையேற்று">
+<!ENTITY button.tooltip.Preferences "விருப்பங்கள்">
+<!ENTITY button.label.Preferences "விருப்பங்கள்">
+<!ENTITY button.label.Reset "மீளத்தொடங்கு">
+<!ENTITY button.tooltip.ResetAll "அனைத்தையும் மீளத்தொடங்கு">
+<!ENTITY button.label.Favorites "விருப்பத்தேர்வுகள்">
+<!ENTITY button.tooltip.Favorites "கோப்பை ஏற்று">
+<!ENTITY toolbar.name "TestGen4Web கட்டுப்பாடு">
+<!ENTITY button.tooltip.SpikeSourceInc "SpikeSource Inc. (http://www.spikesource.com)">
+<!ENTITY label.value.TestGen4Web "TestGen4Web">
+<!ENTITY button.label.FavManage "நிர்வகி (TODO )">
+<!ENTITY button.tooltip.FavManage "விருப்பத்தேர்வுகளை நிர்வகி">
+<!ENTITY button.label.FavCleanup "தானியங்கு சுத்தப்படுத்தல்">
+<!ENTITY button.tooltip.FavCleanup "காணப்படாத கோப்புகளை நீக்குக">
+<!ENTITY pref.button.Reset "மீளத்தொடங்கு">
+<!ENTITY pref.label.Record "பதிவுசெய்யப்படுகிறது">
+<!ENTITY pref.label.Play "ஓட்டு">
+<!ENTITY pref.label.View "பார்வை">
+<!ENTITY pref.ScrollToObjectWhenFound "Scroll to object when found">
+<!ENTITY pref.Delay "தாமதம் (ms)">
+<!ENTITY pref.Simplified "எளிமைப்படுத்தப்பட்ட பதிவுகளாக சேமி.  (No XPath) - TODO">
+<!ENTITY pref.MaxWaitTime "பக்கத்தை ஏற்ற அதிகபட்ச காத்திருப்பு நேரம் (ms)">
+<!ENTITY pref.ViewLabelsWithToolbarButtons "View labels with toolbar buttons">
+<!ENTITY pref.ViewPlayProgressBar "நிகழ்நிலை சட்டத்தை பார்க்க">
+<!ENTITY pref.Debug "பிழைநீக்கு">
+<!ENTITY pref.DisplayDebugMessages "பிழையகழ் செய்திகளை ஜாவாஸ்கிரிப்ட் கன்சோலில் காட்டுக">
+<!ENTITY pref.HilightObjects "பொருள் காணப்பட்டால் மேம்படுத்திக்காட்டுக">
+<!ENTITY pref.HilightObjectsWhileSearching "பொருட்களைத் தேடும்போது மேம்படுத்திக்காட்டுக (more clutter)">
+<!ENTITY pref.VerifyLink "வலைத்தொடர்களை சரிபார்">
+<!ENTITY pref.VerifyPageTitles "பக்கத்தலைப்பை சரிபார்">
+<!ENTITY pref.title.RecorderPreferences "பதிவான் விருப்பங்கள்">
+<!ENTITY pref.Favorites "விருப்பத்தேர்வுகள்">
+<!ENTITY pref.FavDontAsk "சேமிப்பதற்கு முன் கேட்காதே">
+<!ENTITY pref.FavAlwaysAdd "எப்போதும் சேர்க்கவும் (எச்சரிக்கை செய்யாதே)">
+<!ENTITY pref.FavPlayOnLoad "ஏற்றியவுடன் தானாக ஒடத் தொடங்குக">
+<!ENTITY pref.FavAskBeforePlay "ஓட்டுவதற்கு முன் கேட்கவும்">
+<!ENTITY pref.NotANumber "எண் இல்லை">
+<!ENTITY pref.tooltip.IncrementVariable "Use up/down arrow to change value, ctrl/shift to control the increment slower/faster.">
+<!ENTITY pref.tablabel.General "பொது">
+<!ENTITY pref.tablabel.Advanced "மேம்பட்ட">
+<!ENTITY recordconfirm.label.ConfirmMessage "சில பதிவுகள் ஏற்கனவே உள்ளன, தேர்வுசெய்யப்படுகிறது">
+<!ENTITY recordconfirm.label.ConfirmMessageDescribeOK "'OK'வை கிளிக் செய்தால் பதிவு மீளத்தொடங்கும்">
+<!ENTITY recordconfirm.label.ConfirmMessageDescribeReset "'Reset'- பதிவை நிறுத்தி பின் மீளத் தொடங்கும்">
+<!ENTITY recordconfirm.label.ConfirmMessageDescribeCancel "'Cancel'ஐ கிளிக் செய்தால் பதிவுசெய்தல் தடுக்கப்படும்">
+<!ENTITY recordconfirm.label.header.Cofirm "உறுதிசெய்">
+<!ENTITY recordconfirm.button.label.Reset "மீளத்தொடங்கு">
+<!ENTITY recordconfirm.title.Confirm "உறுதிசெய்">

@@ -1,0 +1,9 @@
+TG4W_TEST/alert-capture.xml
+TG4W_TEST/alert-prompt.xml
+TG4W_TEST/conditions.xml
+TG4W_TEST/dataset-non-iterable.xml
+TG4W_TEST/form-elements.xml
+TG4W_TEST/loop-condition.xml
+TG4W_TEST/nested-loop.xml
+TG4W_TEST/windows.xml
+TG4W_TEST/xml-dataset.xml

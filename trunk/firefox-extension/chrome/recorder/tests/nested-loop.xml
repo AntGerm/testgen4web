@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="1.0.2">
+    <datasets>
+        <dataset id="abc" xpath="query" file="TG4W_TEST/test.csv" type="csv" iterable="true"/>
+    </datasets>
+    <actions>
+        <action type="loop-dataset-abc-varname" refresh="" step="0">
+            <xpath><![CDATA[lhs]]></xpath>
+            <value><![CDATA[rhs]]></value>
+        </action>
+        <action type="goto" refresh="." window="." step="1">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://www.google.com/]]></value>
+        </action>
+        <action type="setvar-count-num" refresh="" window="." step="2">
+            <xpath><![CDATA[1]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="loop-condition-le" refresh="" step="3">
+            <xpath><![CDATA[count]]></xpath>
+            <value><![CDATA[2]]></value>
+        </action>
+        <action type="verify-title" window="." step="4">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Google]]></value>
+        </action>
+        <action type="fill" window="." step="5">
+            <xpath><![CDATA[*/FORM[@NAME="f"]/*/INPUT[@NAME="q"]]]></xpath>
+            <value><![CDATA[${abc.query} ${count}]]></value>
+        </action>
+        <action type="setvar-count-num" refresh="" window="." step="6">
+            <xpath><![CDATA[count+1]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="end" refresh="" step="7">
+            <xpath><![CDATA[]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="click" refresh="." window="." step="8">
+            <xpath><![CDATA[*/FORM[@NAME="f"]/*/INPUT[@NAME="btnG" and @VALUE="Google Search"]]]></xpath>
+            <value><![CDATA[btnG]]></value>
+        </action>
+        <action type="verify-title" window="." step="9">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[vinay - Google Search]]></value>
+        </action>
+        <action type="end" refresh="" step="10">
+            <xpath><![CDATA[]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+    </actions>
+</tg4w>

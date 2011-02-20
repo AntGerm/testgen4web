@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?> 
+<!DOCTYPE dialog SYSTEM "chrome://recorder/locale/overlay.dtd">
+
+<!--
+Copyright(c) 2004-2005, SpikeSource Inc. All Rights Reserved.
+Licensed under the Open Software License version 2.1
+(See www.spikesource.com/license.html)
+ 
+author: Vinay Srini (vsrini@spikesource.com)
+-->
+
+<dialog id="recordConfirmation"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&recordconfirm.title.Confirm;"
+    height="150"
+    width="500"
+    buttons="accept,cancel,extra1"
+    buttonlabelextra1="&recordconfirm.button.label.Reset;"
+    ondialogaccept="dialog.answer='accept';"
+    ondialogcancel="dialog.answer='cancel';"
+    ondialogextra1="dialog.answer='reset';window.close();"
+    defaultButton="cancel"
+    flex="1">
+
+    <script>
+        var dialog = window.arguments[0].dialog;
+    </script>
+    
+    <spacer/>
+
+    <vbox>
+        <description>&recordconfirm.label.ConfirmMessage;</description>
+        <description class="indent">&recordconfirm.label.ConfirmMessageDescribeOK;</description>
+        <description class="indent">&recordconfirm.label.ConfirmMessageDescribeReset;</description>
+        <description class="indent">&recordconfirm.label.ConfirmMessageDescribeCancel;</description>
+    </vbox>
+
+    <spacer flex="1"/>
+
+    <hbox align="right">
+        <spacer flex="1"/>
+        <button id="accept-button" dlgtype="accept"/>
+        <button id="cancel-button" dlgtype="cancel"/>
+        <button id="extra1-button" dlgtype="extra1"/>
+    </hbox>
+</dialog>

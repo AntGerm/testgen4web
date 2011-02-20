@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?> 
+<?xml-stylesheet href="chrome://recorder/skin/report.css" type="text/css"?>
+
+<!DOCTYPE dialog SYSTEM "chrome://recorder/locale/overlay.dtd">
+
+<!--
+Copyright(c) 2004-2005, SpikeSource Inc. All Rights Reserved.
+Licensed under the Open Software License version 2.1
+(See www.spikesource.com/license.html)
+
+author: Vinay Srini (vsrini@spikesource.com)
+-->
+
+<window id="tg4w_testreporter"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    title="TestGen4Web test report" onload="com.spikesource.tg4w.reportingUILoad();">
+
+    <script type="application/x-javascript" src="setupnamespace.js"/>
+    <script type="application/x-javascript" src="reporting.js"/>
+    <script type="application/x-javascript" src="reporting-ui.js"/>
+
+    <hbox flex="1">
+        <vbox flex="1">
+            <label class="header" value="Select test run:"/>
+            <menulist id="aggfilenamelist" onselect="com.spikesource.tg4w.reportingUI.fileChange();">
+                <menupopup flex="1" id="aggfilenamelistmenu"
+                    datasources="profile:tg4w_test_reports.sqlite" ref="*" querytype="storage">
+                    <menuitem idreport="_all_" label="All"/>
+                    <template>
+                        <query>
+                            select id, filename, count(*) as count from report group by filename
+                        </query>
+                        <action>
+                            <menuitem uri="?listitem" idreport="?filename" label="?filename (report count: ?count )"/>
+                        </action>
+                    </template>
+                </menupopup>
+            </menulist>
+            <splitter/>
+            <hbox flex="1">
+                <vbox flex="2">
+                    <label class="header" value="Test Runs"/>
+                    <listbox onselect="com.spikesource.tg4w.reportingUI.reportChange(this.selectedItem.getAttribute('reportid'))"
+                        flex="3" id="reports-list" datasources="dummy" ref="*" querytype="simpledata">
+                        <listhead>
+                            <listheader label=""/>
+                            <listheader label="File"/>
+                            <listheader label="Date run"/>
+                        </listhead>
+                        <listcols>
+                            <listcol flex="1"/>
+                            <listcol flex="6"/>
+                            <listcol flex="3"/>
+                        </listcols>
+                        <template>
+                            <query>
+                                <default>select file_normalize(filename) as filename, id, datetime(created_date, 'localtime') as created_date, result from report where filename = :filename order by updated_date desc</default>
+                                <all>select file_normalize(filename) as filename, id, datetime(created_date, 'localtime') as created_date, result from report order by updated_date desc</all>
+                                <param id="filename" name="filename"></param>
+                            </query>
+                            <action>
+                                <listitem reportid="?id" uri="?listitem">
+                                    <listcell class="?result" label="?result"/>
+                                    <listcell title="?filename" label="?filename"/>
+                                    <listcell title="?created_date" label="?created_date"/>
+                                </listitem>
+                            </action>
+                        </template>
+                    </listbox>
+                    <splitter/>
+                    <vbox flex="1">
+                        <groupbox>
+                            <caption label="Selected report" class="prefHeader"/>
+                            <hbox>
+                                <button label="Delete" onclick="com.spikesource.tg4w.reportingUI.deleteReport();"/>
+                                <button disabled="true" label="Export as HTML" onclick="com.spikesource.tg4w.reportingUI.exportReportAsHtml();"/>
+                            </hbox>
+                        </groupbox>
+                        <groupbox>
+                            <caption label="All reports" class="prefHeader"/>
+                            <hbox>
+                                <button label="Delete" onclick="com.spikesource.tg4w.reportingUI.deleteAllReports();"/>
+                                <button disabled="true" label="Export as HTML" onclick="com.spikesource.tg4w.reportingUI.exportReportAsHtml();"/>
+                            </hbox>
+                        </groupbox>
+                        <groupbox>
+                            <caption label="Database" class="prefHeader"/>
+                            <hbox>
+                                <button label="Reset" onclick="com.spikesource.tg4w.reportingUI.purgeDatabase();"/>
+                                <button disabled="true" label="Export as HTML" onclick="com.spikesource.tg4w.reportingUI.exportDbAsHtml();"/>
+                            </hbox>
+                        </groupbox>
+                    </vbox>
+                </vbox>
+                <splitter/>
+                <vbox flex="6">
+                    <vbox flex="2">
+                        <label class="header" value="Steps followed for the test run. Select a step to show details:"/>
+                        <listbox onselect="com.spikesource.tg4w.reportingUI.changeTest(this.selectedItem.getAttribute('testid'), this.selectedItem.getAttribute('aid'));"
+                            flex="1" id="test-report" datasources="profile:tg4w_test_reports.sqlite" ref="*" querytype="storage">
+                            <listhead>
+                                <listheader label="Step"/>
+                                <listheader label="Action"/>
+                                <listheader label="Result"/>
+                            </listhead>
+                            <listcols>
+                                <listcol flex="1"/>
+                                <listcol flex="3"/>
+                                <listcol flex="1"/>
+                            </listcols>
+                            <template>
+                                <query>
+                                    select * from action_test where id_report = :id_report order by id_test asc
+                                    <param id="id_report" name="id_report"></param>
+                                </query>
+                                <action>
+                                    <listitem testid="?id_test" aid="?id_action" uri="?listitem">
+                                        <listcell label="?id_test"/>
+                                        <listcell label="?action"/>
+                                        <listcell class="?result" label="?result"/>
+                                    </listitem>
+                                </action>
+                            </template>
+                        </listbox>
+                    </vbox>
+                    <splitter/>
+                    <vbox flex="2">
+                        <label class="header" value="Actions for the test run selected:"/>
+                        <listbox class="reportactionlist" id="actions-list"
+                            flex="1" datasources="dummy" ref="*" querytype="simpledata">
+                            <template>
+                                <query>select humanReadableAction(action, xpath, value) as action, id from actions where id_report = :id_report
+                                    <param id="id_report2" name="id_report">1</param>
+                                </query>
+                                <action>
+                                    <listitem uri="?" aid="action?id" label="?action"/>
+                                </action>
+                            </template>
+                        </listbox>
+                    </vbox>
+                    <splitter/>
+                    <vbox flex="1">
+                        <label class="header" value="Data changed, accessed during the selected step:"/>
+                        <listbox flex="1" id="data-changes" datasources="dummy" ref="*" querytype="simpledata">
+                            <listhead>
+                                <listheader label="Type"/>
+                                <listheader label="Name"/>
+                                <listheader label="Value"/>
+                            </listhead>
+                            <listcols>
+                                <listcol flex="1"/>
+                                <listcol flex="2"/>
+                                <listcol flex="4"/>
+                            </listcols>
+                            <template>
+                                <query>
+                                    select humanReadableDataChangeType(type) as type, name, value, id_test
+                                        from data_change where id_test = :id_test order by id asc
+                                    <param id="id_test" name="id_test"></param>
+                                </query>
+                                <action>
+                                    <listitem testid="?id_test" uri="?listitem">
+                                        <listcell label="?type"/>
+                                        <listcell label="?name"/>
+                                        <listcell label="?value"/>
+                                    </listitem>
+                                </action>
+                            </template>
+                        </listbox>
+                    </vbox>
+                </vbox>
+            </hbox>
+        </vbox>
+    </hbox>
+</window>

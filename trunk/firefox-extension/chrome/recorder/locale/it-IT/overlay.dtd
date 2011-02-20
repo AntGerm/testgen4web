@@ -1,0 +1,81 @@
+<!ENTITY menu.label.Verify              "Verifica">
+<!ENTITY menu.label.VerifySelectedText  "Assert Text">
+<!ENTITY menu.label.VerifyPageTitle     "Assert Titolo Pagina">
+<!ENTITY menu.label.AssertTextNotPresent "Assert Text Non Presente">
+<!ENTITY menu.label.Debug               "Debug">
+<!ENTITY menu.label.WhatIsThis          "Che cosa e' questo?">
+<!ENTITY menu.label.FindMe              "Trovami">
+<!ENTITY button.tooltip.ReviewEditSteps "Controlla/Edita passi">
+<!ENTITY button.label.ReviewEditSteps   "Edita passi">
+<!ENTITY button.tooltip.Debug           "Debug">
+<!ENTITY button.label.Debug             "Debug">
+<!ENTITY button.tooltip.Record          "Inizia Registrazione">
+<!ENTITY button.label.Record            "Registra">
+<!ENTITY button.tooltip.Stop            "Stop">
+<!ENTITY button.label.Stop              "Stop">
+<!ENTITY button.tooltip.Pause           "Pausa">
+<!ENTITY button.label.Pause             "Pausa">
+<!ENTITY button.tooltip.Play            "Play">
+<!ENTITY button.label.Play              "Play">
+<!ENTITY button.tooltip.Save            "Save">
+<!ENTITY button.label.Save              "Save">
+<!ENTITY button.tooltip.Open            "Apri Registrazione">
+<!ENTITY button.label.Open              "Apri">
+<!ENTITY button.tooltip.Preferences     "Preferenze">
+<!ENTITY button.label.Preferences       "Preferenze">
+<!ENTITY button.label.Reset             "Resetta">
+<!ENTITY button.tooltip.ResetAll        "Resetta Tutto">
+<!ENTITY button.label.Favorites         "Preferiti">
+<!ENTITY button.tooltip.Favorites       "Carica file">
+<!ENTITY toolbar.name                   "TestGen4Web Control">
+<!ENTITY button.tooltip.SpikeSourceInc  "SpikeSource Inc. (http://www.spikesource.com)">
+<!ENTITY label.value.TestGen4Web        "TestGen4Web">
+<!ENTITY button.label.FavManage         "Gestisci (TODO)">
+<!ENTITY button.tooltip.FavManage       "Gestisci Preferiti">
+<!ENTITY button.label.FavCleanup        "Auto pulizia">
+<!ENTITY button.tooltip.FavCleanup      "Pulisci file che non esistono">
+
+<!ENTITY button.tooltip.Upload          "Test Upload Service">
+<!ENTITY button.label.Upload            "Upload">
+<!ENTITY button.label.CreateTUSArchive  "Create Test Archive">
+<!ENTITY button.tooltip.CreateTUSArchive "Create Archive which can be uploaded to SpikeSource Test Upload Service ">
+<!ENTITY button.label.HelpTUS           "What is this?">
+<!ENTITY button.tooltip.HelpTUS         "Help on SpikeSource Test Upload Service">
+
+<!ENTITY pref.button.Reset              "Resetta">
+<!ENTITY pref.label.Record              "In registrazione">
+<!ENTITY pref.label.Play                "Play">
+<!ENTITY pref.label.View                "Vedi">
+<!ENTITY pref.ScrollToObjectWhenFound   "Scrolla verso l'oggetto quando trovato">
+<!ENTITY pref.Delay                     "Ritardo (ms)">
+<!ENTITY pref.Simplified                "Salva registrazione semplificata (No XPath) - TODO">
+<!ENTITY pref.MaxWaitTime               "Massima attesa per il caricamento pagina(ms)">
+<!ENTITY pref.ViewLabelsWithToolbarButtons "Mostra etichette con i bottoni sulla toolbar">
+<!ENTITY pref.ViewPlayProgressBar       "Mostra barra di avanzamento Play">
+<!ENTITY pref.Debug                     "Debug">
+<!ENTITY pref.DisplayDebugMessages      "Mostra messaggi di debug sulla javascript console">
+<!ENTITY pref.HilightObjects            "Evidenzia gli oggetti quando trovati">
+<!ENTITY pref.HilightObjectsWhileSearching "Evidenzia gli oggetti durante la ricerca (more clutter)">
+<!ENTITY pref.VerifyLink                "Verifica links">
+<!ENTITY pref.VerifyPageTitles          "Verifica titoli pagine">
+<!ENTITY pref.title.RecorderPreferences "Preference Registratore">
+<!ENTITY pref.Favorites                 "Preferiti">
+<!ENTITY pref.FavDontAsk                "Non chiedermi di salvare">
+<!ENTITY pref.FavAlwaysAdd              "Aggiungi sempre (non richiedere)">
+<!ENTITY pref.FavPlayOnLoad             "Auto riproduzione su apertura">
+<!ENTITY pref.FavAskBeforePlay          "Chiedi prima di riprodurre">
+<!ENTITY pref.NotANumber                "Non un numero">
+<!ENTITY pref.tooltip.IncrementVariable "Usa freccia su/giu' per cambiare valore, ctrl/shift per cambiare piu' lento/ piu' veloce">
+<!ENTITY pref.tablabel.General          "Generale">
+<!ENTITY pref.tablabel.Advanced         "Avanzate">
+
+<!ENTITY recordconfirm.label.ConfirmMessage     "Qualche registrazione esiste
+gia'. Selezionando">
+<!ENTITY recordconfirm.label.ConfirmMessageDescribeOK     "'OK' ricomincia la registrazione">
+<!ENTITY recordconfirm.label.ConfirmMessageDescribeReset  "'Resetta' cancella e
+ricomincia una nuova registrazione">
+<!ENTITY recordconfirm.label.ConfirmMessageDescribeCancel "'Cancel' cancella
+l'azione di registrazione">
+<!ENTITY recordconfirm.label.header.Cofirm      "Conferma">
+<!ENTITY recordconfirm.button.label.Reset       "Resetta">
+<!ENTITY recordconfirm.title.Confirm            "Conferma">

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.38.1">
+    <actions>
+        <action type="goto" refresh="true" step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://localhost/]]></value>
+        </action>
+        <action type="verify-title" step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Test Page for Apache Installation]]></value>
+        </action>
+        <action type="click" refresh="true" step="2">
+            <xpath><![CDATA[*/A[@CDATA="documentation"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="3">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Apache HTTP Server Version 2.0 Documentation - Apache HTTP Server]]></value>
+        </action>
+        <action type="click" refresh="true" step="4">
+            <xpath><![CDATA[TABLE[@ID="indextable"]/TBODY[1]/TR[1]/TD[2]/*/A[@CDATA="Binding"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="5">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Binding - Apache HTTP Server]]></value>
+        </action>
+        <action type="click" refresh="true" step="6">
+            <xpath><![CDATA[*/TABLE[1]/TBODY[1]/TR[2]/TD[1]/*/A[@CDATA="mpm_common"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="7">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[mpm_common - Apache HTTP Server]]></value>
+        </action>
+        <action type="click" refresh="true" step="8">
+            <xpath><![CDATA[*/A[@CDATA="Documentation"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="9">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Documentation Project - The Apache HTTP Server Project]]></value>
+        </action>
+    </actions>
+</tg4w>

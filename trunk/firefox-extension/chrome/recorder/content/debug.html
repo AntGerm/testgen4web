@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <script src="scriptaculous/prototype.js" type="text/javascript"></script>
+        <style>
+            .stepsheader { font-weight:bold;}
+            #main_container { font-family:monospace; font-size: 11px; }
+            .input_style { width: 100%; }
+        </style>
+        <script>
+            var recorder = null;
+            function openingYou(rec) {
+                recorder = rec;
+            }
+
+            function closingYou(recorder) {
+            }
+
+            function evaluateJavascript() {
+                try {
+                    var js2execute = recorder.getEvalPrefixJS() + $("js_area").value;
+                    alert(js2execute);
+                    var result = eval(js2execute);
+                    alert(result);
+                } catch (e) {
+                    alert(e);
+                }
+            }
+
+            function findOnPage() {
+                try {
+                    var element = recorder.getElement(recorder.getWorkingDocument(), $("xpath_area").value);
+                    if (element) {
+                        recorder.assertElement(element, $("xpath_area").value);
+                    }
+                    alert(element);
+                } catch (e) {
+                    alert(e);
+                }
+            }
+
+            function prepareForInspect() {
+                recorder.redirectNextOnclickAction(inspectElement, "DEBUG: click on element to inspect");
+            }
+
+            function inspectElement(winref, event) {
+                recorder.setStatus("Inspecting..");
+                $("xpath_area").value = recorder.findCrudeXpath(event.target, winref);
+                recorder.stopEventPropagation(event);
+            }
+        </script>
+    </head>
+    <body>
+        <div id="main_container">
+            <div class="stepsheader">Execute javascript:</div>
+            <textarea class="input_style" rows="7" id="js_area"></textarea>
+            <input type="button" value="Execute Javascript" onclick="evaluateJavascript()"/>
+            <br/><br/>
+            <div class="stepsheader">Find xpath:</div>
+            <input class="input_style" type="text" id="xpath_area"/>
+            <input type="button" value="Find on page" onclick="findOnPage()"/>
+            <br/><br/>
+            <div class="stepsheader">Inspect element:</div>
+            <input type="button" value="Inspect" onclick="prepareForInspect()"/><br/>
+            (make sure the element you want to inspect is in sight)
+        </div>
+    </body>
+</html>

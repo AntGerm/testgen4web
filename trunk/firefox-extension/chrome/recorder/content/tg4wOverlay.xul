@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://recorder/skin/overlay.css" type="text/css"?>
+<overlay id="recorder-overlay"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+    <script type="application/x-javascript" src="setupnamespace.js"/>
+    <script type="application/x-javascript" src="dataset-edit.js"/>
+    <script><![CDATA[
+        window.addEventListener("load", function(event) {
+                var windowNames = ["newEditStepEditor", "newEditSteps", "runStatusWindow"];
+                for (var i = 0; i < windowNames.length; i ++) {
+                    var win = document.getElementById(windowNames[i]).contentWindow;
+                    win.editDatasetFunctions = com.spikesource.tg4w.datasetEditFunctions;
+                }
+                com.spikesource.tg4w.datasetEditFunctions.tg4w_datasetCancelCommand();
+            }, false);
+    ]]></script>
+
+    <hbox id="newrecordeditor" flex="1">
+        <vbox flex="3">
+            <toolbar id="edittoolbar">
+                <hbox flex="1" class="borderbottom">
+                    <menulist id="edit-createnew" class="newstepmenu"
+                        oncommand="com.spikesource.tg4w.recorder.newStep(this.value); this.value = 'new'; document.getElementById('newEditSteps').focus();">
+                        <menupopup>
+                            <menuitem class="newstepmenuitem" value="new" label="insert new step &gt;&gt;" selected="true"/>
+                            <menuitem class="newstepmenuitem" value="loop-dataset" label="Loop on Dataset (do-while)"/>
+                            <menuitem class="newstepmenuitem" value="loop-condition" label="Loop on Condition (do-while)"/>
+                            <menuitem class="newstepmenuitem" value="condition-simple" label="Condition (if)"/>
+                            <menuitem class="newstepmenuitem" value="goto-href" label="Navigate to url"/>
+                            <menuitem class="newstepmenuitem" value="goto-label" label="Jump to label"/>
+                            <menuitem class="newstepmenuitem" value="sleep" label="Sleep"/>
+                            <menuitem class="newstepmenuitem" value="setvar" label="Variable - new"/>
+                            <menuitem class="newstepmenuitem" value="exec-js" label="Execute javascript"/>
+                            <menuitem class="newstepmenuitem" value="assert-text" label="Assert text"/>
+                            <menuitem class="newstepmenuitem" value="assert-no-text" label="Assert NO such text"/>
+                        </menupopup>
+                    </menulist>
+                    <toolbarseparator/>
+                    <toolbarbutton class="editorbutton" 
+                        image="chrome://recorder/skin/up.png" tooltiptext="Move up"
+                        label="Up" oncommand="com.spikesource.tg4w.recorder.editorCallback(com.spikesource.tg4w.recorder, 'up');"/>
+                    <toolbarbutton class="editorbutton" tooltiptext="Move down"
+                        image="chrome://recorder/skin/down.png"
+                        label="Down" oncommand="com.spikesource.tg4w.recorder.editorCallback(com.spikesource.tg4w.recorder, 'down');"/>
+                    <toolbarbutton class="editorbutton" tooltiptext="Cut"
+                        image="chrome://recorder/skin/cut.png"
+                        label="Cut" oncommand="com.spikesource.tg4w.recorder.editorCallback(com.spikesource.tg4w.recorder, 'cut');"/>
+                    <toolbarbutton class="editorbutton" tooltiptext="Paste"
+                        image="chrome://recorder/skin/paste.png"
+                        label="Paste" oncommand="com.spikesource.tg4w.recorder.editorCallback(com.spikesource.tg4w.recorder, 'paste');"/>
+                    <toolbarbutton class="savebutton" tooltiptext="Save"
+                        image="chrome://recorder/skin/save2.png"
+                        label="Save" oncommand="com.spikesource.tg4w.recorder.saveFile();"/>
+                    <toolbarbutton class="reloadbutton" tooltiptext="Reload"
+                        image="chrome://recorder/skin/reload.png"
+                        label="Reload" oncommand="com.spikesource.tg4w.recorder.reloadFile();"/>
+                    <toolbarseparator/>
+                    <toolbarspring/>
+                </hbox>
+            </toolbar>
+            <browser showcaret="true" id="newEditSteps" type="chrome" flex="1" src="chrome://recorder/content/show-steps2.html"/>
+        </vbox>
+        <splitter/>
+        <tabbox flex="1" id="edit-right-tabs">
+            <tabs>
+                <tab label="Step Edit"/>
+                <tab label="Datasets" oncommand="com.spikesource.tg4w.datasetEditFunctions.prepareDatasetsTab(com.spikesource.tg4w.recorder);"/>
+                <tab label="Run Status" id="run-status" selected="true"/>
+                <tab label="Debug" id="debug"/>
+            </tabs>
+
+            <tabpanels flex="1">
+                <tabpanel flex="1" orient="vertical">
+                    <vbox id="newEditStepEditorContainer"  flex="1">
+                        <browser id="newEditStepEditor" type="chrome" flex="1" src="chrome://recorder/content/edit-step2.html"/>
+                        <toolbar id="editedittoolbar">
+                            <hbox flex="1" class="borderbottom">
+                                <toolbarbutton 
+                                    image="chrome://recorder/skin/save2.png"
+                                    label="Save" oncommand="com.spikesource.tg4w.recorder.editStepEditorCallback(com.spikesource.tg4w.recorder, 'save');"/>
+                                <toolbarbutton
+                                    image="chrome://recorder/skin/x.png"
+                                    label="Cancel" oncommand="com.spikesource.tg4w.recorder.editStepEditorCallback(com.spikesource.tg4w.recorder, 'cancel');"/>
+                            </hbox>
+                        </toolbar>
+                    </vbox>
+                </tabpanel>
+                <tabpanel orient="vertical">
+                    <vbox flex="1" style="overflow:auto;">
+                        <vbox flex="1">
+                            <hbox>
+                                <label class="prefCaption" value="Edit "/>
+                                <menulist id="dataset-list-container" oncommand="com.spikesource.tg4w.datasetEditFunctions.tg4w_datasetSelected(com.spikesource.tg4w.recorder, this.value);">
+                                    <menupopup id="dataset-list"></menupopup>
+                                </menulist>
+                            </hbox>
+                            <hbox>
+                                <label class="prefCaption" value="Name "/>
+                                <textbox id="dataset-edit-id"/>
+                            </hbox>
+                            <hbox>
+                                <label class="prefCaption" value="File "/>
+                                <textbox id="dataset-edit-file" value="TG4W_ASK"/>
+                            </hbox>
+                            <hbox>
+                                <label class="prefCaption" value="     "/>
+                                <button label="Pick" oncommand="com.spikesource.tg4w.datasetEditFunctions.tg4w_selectFile('dataset-edit-file')"/>
+                            </hbox>
+                            <hbox>
+                                <label class="prefCaption" value="Query"/>
+                                <textbox id="dataset-edit-xpath"/>
+                            </hbox>
+                            <hbox>
+                                <label class="prefCaption" value="     "/>
+                                <label class="prefCaption" value="(comma separated csv headers/xpaths)"/>
+                            </hbox>
+                            <hbox>
+                                <label class="prefCaption" value="Type "/>
+                                <menulist id="dataset-edit-type">
+                                    <menupopup id="dataset-edit-type-popup">
+                                        <menuitem value="csv" label="csv"/>
+                                        <menuitem value="xml" label="xml"/>
+                                    </menupopup>
+                                </menulist>
+                            </hbox>
+                            <hbox>
+                                <label class="prefCaption" value="Iterable"/>
+                                <menulist id="dataset-edit-iterable">
+                                    <menupopup id="dataset-edit-iterable-popup">
+                                        <menuitem value="true" label="Yes"/>
+                                        <menuitem value="false" label="No"/>
+                                    </menupopup>
+                                </menulist>
+                            </hbox>
+                        </vbox>
+                        <toolbar id="editedittoolbar">
+                            <hbox flex="1" class="borderbottom">
+                                <toolbarbutton 
+                                    image="chrome://recorder/skin/save2.png"
+                                    label="Save" oncommand="com.spikesource.tg4w.datasetEditFunctions.tg4w_datasetSaveCommand(com.spikesource.tg4w.recorder);"/>
+                                <toolbarbutton
+                                    image="chrome://recorder/skin/x.png"
+                                    label="Cancel" oncommand="com.spikesource.tg4w.datasetEditFunctions.tg4w_datasetCancelCommand();"/>
+                            </hbox>
+                        </toolbar>
+                    </vbox>
+                </tabpanel>
+
+                <tabpanel orient="vertical" id="run-status-panel">
+                    <browser id="runStatusWindow" type="chrome" flex="1" src="chrome://recorder/content/run-status.html"/>
+                </tabpanel>
+
+                <tabpanel orient="vertical" id="run-status-panel">
+                    <browser id="debugWindow" type="chrome" flex="1" src="chrome://recorder/content/debug.html"/>
+                </tabpanel>
+
+            </tabpanels>
+        </tabbox>
+    </hbox>
+</overlay>
+

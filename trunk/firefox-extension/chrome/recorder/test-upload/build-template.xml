@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE project [
+]>
+
+<project default="spike:run-test">
+    <!--
+    spike.* properties are defined in project.properties
+    -->
+    <property name="spike.parent.dir" value="."/>
+    <property file="${spike.parent.dir}/project.properties"/>
+
+    <!-- this will have apps to deploy, services to start etc. -->
+    <property file="${basedir}/build.properties"/>
+
+    <!-- General targets, required -->
+    <target name="spike:versions-dependency" description="Return the SpikeSource stack version required by the application and tests.">
+        <echo>SpikeSource Core Stack 1.6 - LAMP</echo>
+    </target>
+
+    <target name="spike:interface-version" description="Return the interface version implemented by this build script.">
+        <echo>1.0</echo>
+    </target>
+
+    <target name="spike:clean" description="Recreate directories for generated binaries, test data, and reports.">
+    </target>
+
+    <target name="spike:compile" description="Compile application and test souce code.">
+    </target>
+
+    <target name="spike:install" description="Deploy application into server if necessary.">
+    </target>
+
+    <target name="spike:pre-test-configure" 
+        description="Do necessary configuration before running tests such as importing test data into database.">
+
+        <exec executable="${spike.maven.cmd}" dir="${spike.parent.dir}">
+            <arg line="-b -E"/>
+            <arg line="${spike.properties.inherit}"/>
+            <arg line="${services.to.start}"/>
+        </exec>
+
+        <antcall target="deploy-tomcat-webapp"/>
+        <antcall target="deploy-apache-webapp"/>
+    </target>
+
+    <target name="deploy-apache-webapp" if="apache.webapp.name">
+        <exec executable="${spike.maven.cmd}" dir="${spike.parent.dir}">
+            <arg line="-b -E"/>
+            <arg line="spike:deploy-httpd-webapp"/>
+            <arg line="${spike.properties.inherit}"/>
+            <arg line="-Dspike.httpd.webapp.name=${apache.webapp.name}"/>
+            <arg line="-Dspike.webdir.to.deploy=${basedir}/${apache.webapp.dir}"/>
+        </exec>
+    </target>
+
+    <target name="deploy-tomcat-webapp" if="tomcat.war.file">
+        <exec executable="${spike.maven.cmd}" dir="${spike.parent.dir}">
+            <arg line="-b -E"/>
+            <arg line="spike:deploy-tomcat-webapp"/>
+            <arg line="${spike.properties.inherit}"/>
+            <arg line="-Dspike.webapp.warfile=${basedir}/${tomcat.war.file}"/>
+            <!-- test upload ignores this if the file does not exist! -->
+            <arg line="-Dspike.webapp.xml=${basedir}/${tomcat.cfg.file}"/>
+        </exec>
+    </target>
+
+    <target name="spike:test" description="Run all tests.">
+        <ant dir="${spike.testgen4web.translator.home}" antfile="test.xml" target="test-httpunit">
+            <property name="input.file" value="${basedir}/tests/"/>
+            <property name="unit.test.data.dir" value="${spike.data.dir}"/>
+            <property name="unit.test.report.dir" value="${spike.report.dir}"/>
+        </ant>
+    </target>
+
+    <target name="spike:post-test-configure"
+        description="Do necessary configuration after running tests.">
+        <exec executable="${spike.maven.cmd}" dir="${spike.parent.dir}">
+            <arg line="-b -E"/>
+            <arg line="${spike.properties.inherit}"/>
+            <arg line="${services.to.stop}"/>
+        </exec>
+    </target>
+
+    <target name="spike:test-report" description="Generate JUnit report in HTML.">
+    </target>
+
+    <!-- coverage targets start here-->
+    <target name="spike:coverage-compile" description="Instrument and compile application source code and compile test code.">
+    </target>
+
+    <target name="spike:coverage-install"   
+        description="Deploy instrumented application into server if necessary.">
+    </target>
+
+    <target name="spike:pre-test-coverage-configure"
+        description="Do necessary configuration before running tests such as importing test data into database.">
+
+    </target>
+
+    <target name="spike:test-coverage"
+        description="Run all unit tests against instrumented application.">
+    </target>
+
+    <target name="spike:post-test-coverage-configure"
+        description="Do necessary configuration after running tests.">
+    </target>
+
+    <target name="spike:coverage-report"  
+        description="Generate Clover report based on coverage database."> 
+        <taskdef resource="clovertasks" classpath="${clover.jar}"/>
+    </target>
+
+    <!-- code convention targets start here -->
+    <target name="spike:test-style" description="Run Checkstyle on all Java source files." >
+    </target>
+
+    <target name="spike:style-report" description="Generate Checkstyle HTML report.">
+    </target>
+
+    <!-- Wrapper targets -->
+    <target name="spike:run-test" description="Target to call other spike targets for test execution.">
+        <antcall target="spike:test-report"/>
+    </target>
+
+    <target name="spike:clover" description="Target to call other spike targets for Clover code coverage measurement.">
+    </target>
+
+    <target name="spike:checkstyle" description="Target to call other spike targets for checking code conventions using Checkstyle.">
+    </target>
+</project>

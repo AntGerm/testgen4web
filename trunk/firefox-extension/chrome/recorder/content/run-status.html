@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <script src="scriptaculous/prototype.js" type="text/javascript"></script>
+        <style>
+            .stepsheader { font-weight:bold;}
+            #main_container { font-family:monospace; font-size: 11px; }
+            .playing { color:red; font-weight:bold; display:none; }
+            .step { margin-left:20px; }
+            .container { border:1px solid gray; background-color:#ccffff; }
+            .end { margin-left:0; }
+            .command_value { color:blue; }
+            .label { border:1px solid green; }
+            .selected { background-color:pink; }
+            div {
+                padding:2px;
+            }
+        </style>
+        <script>
+            function openingYou(recorder) {
+                recorder.addRunStatusCallback(runStepsCallback);
+                runStepsCallback(recorder, "reset");
+            }
+
+            function closingYou(recorder) {
+                recorder.removeRunStatusCallback(runStepsCallback);
+            }
+
+            function runStepsCallback(recorder, fcntl, name) {
+                try {
+                    if (fcntl == "var-update") {
+                        var varE = $("var_" + name);
+                        if (!varE) {
+                            varE = document.createElement("div");
+                            varE.setAttribute("id", "var_" + name);
+                            $("variables").appendChild(varE);
+                        }
+                        varE.innerHTML = "<b>" + name + "</b> : " + recorder.getVariableVal(name);
+                    } else if (fcntl == "status-update") {
+                        $("status").innerHTML = name;
+                    } else if (fcntl == "ds-update") {
+                        var dsE = $("ds_" + name);
+                        if (!dsE) {
+                            dsE = document.createElement("div");
+                            dsE.setAttribute("id", "ds_" + name);
+                            $("datasets").appendChild(dsE);
+                        }
+                        var ds = recorder.tg4wdh.getDataset(name);
+                        dsE.innerHTML = "<b>" + name + "</b> : iteration count = " + (ds.loopCount + 1) + " / " + ds.length();
+                    } else if (fcntl == "reset") {
+                        $("datasets").innerHTML = "";
+                        $("variables").innerHTML = "";
+
+                        var dsnames = recorder.getDatasetNames();
+                        for (var i = 0; i < dsnames.length; i ++) {
+                            runStepsCallback(recorder, "ds-update", dsnames[i]);
+                        }
+                        var varnames = recorder.getVariableNames();
+                        for (var i = 0; i < varnames.length; i ++) {
+                            runStepsCallback(recorder, "var-update", varnames[i]);
+                        }
+
+                    }
+                } catch (e) {
+                    // alert(e);
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="main_container">
+            <div class="stepsheader">Status:</div>
+            <div class="step container" id="status"></div>
+            <div class="stepsheader">Datasets:</div>
+            <div class="step container" id="datasets"></div>
+            <div class="stepsheader">Variables:</div>
+            <div class="step container" id="variables"></div>
+        </div>
+    </body>
+</html>

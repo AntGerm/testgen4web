@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?> 
+<?xml-stylesheet href="chrome://recorder/skin/options.css" type="text/css"?>
+
+<!DOCTYPE dialog SYSTEM "chrome://recorder/locale/overlay.dtd">
+
+<!--
+Copyright(c) 2004-2005, SpikeSource Inc. All Rights Reserved.
+Licensed under the Open Software License version 2.1
+(See www.spikesource.com/license.html)
+
+author: Vinay Srini (vsrini@spikesource.com)
+-->
+
+<dialog id="recorderPrefDialog"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&pref.title.RecorderPreferences;"
+    buttons="accept,extra1"
+    buttonlabelextra1="&pref.button.Reset;"
+    persist="width,height"
+    onload="com.spikesource.tg4w.tg4woptions.onDisplayLoad(event);"
+    ondialogextra1="com.spikesource.tg4w.tg4woptions.reset(event);"
+    ondialogaccept="return com.spikesource.tg4w.tg4woptions.onSave(event);" flex="1">
+
+    <script type="application/x-javascript" src="setupnamespace.js"/>
+    <script type="application/x-javascript" src="common.js"/>
+    <script type="application/x-javascript" src="options.js"/>
+
+    <tabbox flex="1">
+        <tabs>
+            <tab label="&pref.tablabel.General;"/>
+            <tab label="&pref.tablabel.Fancy;"/>
+            <tab label="&pref.tablabel.Advanced;"/>
+        </tabs>
+
+        <tabpanels>
+            <tabpanel orient="vertical">
+                <groupbox>
+                    <caption label="&pref.label.Record;" class="prefHeader"/>
+                    <vbox>
+                        <checkbox id="record-add-verify-page-title" label="&pref.VerifyPageTitles;"/>
+                        <checkbox id="record-no-xpath" hidden="true" disabled="true" label="&pref.Simplified;"/>
+                        <checkbox id="ignore-xpath-id" label="&pref.IgnoreXpathId;"/>
+                        <menulist id="record-mode">
+                            <menupopup>
+                                <menuitem value="tg4w_smart" label="Record mode: Smart xpath (recommended)"/>
+                                <menuitem value="tg4w_dumb" label="Record mode: Plain xpath"/>
+                            </menupopup>
+                        </menulist>
+                    </vbox>
+                </groupbox>
+
+                <groupbox>
+                    <caption label="&pref.label.Play;" class="prefHeader"/>
+                    <vbox>
+                        <checkbox id="play-scroll-to-object" label="&pref.ScrollToObjectWhenFound;"/>
+                        <hbox valign="middle">
+                            <textbox tooltiptext="&pref.tooltip.IncrementVariable;"
+                                style="max-width:50px;" id="play-delay"
+                                onkeyup="com.spikesource.tg4w.tg4woptions.changeValue(event, 'play-delay', 10, 10000)"/>
+                            <label class="prefCaption" id="play-delay-label" value="&pref.Delay;"/>
+                        </hbox>
+                        <hbox valign="middle">
+                            <textbox tooltiptext="&pref.tooltip.IncrementVariable;"
+                                multiline="false" style="max-width:50px;" id="max-time-allowed-for-page-load"
+                                onkeyup="com.spikesource.tg4w.tg4woptions.changeValue(event, 'max-time-allowed-for-page-load', 3000, 60000)"/>
+                            <label class="prefCaption" value="&pref.MaxWaitTime;" id="max-time-allowed-for-page-load-label"/>
+                        </hbox>
+                    </vbox>
+                </groupbox>
+
+                <groupbox>
+                    <caption label="&pref.label.View;" class="prefHeader"/>
+                    <vbox>
+                        <checkbox id="always-show" hidden="true" label="&pref.AlwaysShow;"/>
+                        <hbox valign="middle">
+                            <checkbox id="view-text-with-buttons" label="&pref.ViewLabelsWithToolbarButtons;"/>
+                        </hbox>
+                        <checkbox id="view-play-progress-bar" label="&pref.ViewPlayProgressBar;"/>
+                    </vbox>
+                </groupbox>
+            </tabpanel>
+            <tabpanel  orient="vertical">
+                <groupbox>
+                    <vbox>
+                        <checkbox id="fancy-typing-enabled"     label="&pref.DoFancyTyping;"/>
+                        <hbox valign="middle">
+                            <textbox tooltiptext="&pref.tooltip.IncrementVariable;"
+                                style="max-width:50px;" id="fancy-typing-interval"
+                                onkeyup="com.spikesource.tg4w.tg4woptions.changeValue(event, 'fancy-typing-interval', 10, 300)"/>
+                            <label class="prefCaption" id="fancy-typing-interval-label" value="&pref.FancyTypingInterval;"/>
+                        </hbox>
+                    </vbox>
+
+                </groupbox>
+            </tabpanel>
+
+            <tabpanel  orient="vertical">
+                <groupbox>
+                    <caption label="&pref.Favorites;" class="prefHeader"/>
+                    <checkbox id="favorite-dont-ask"      label="&pref.FavDontAsk;"/>
+                    <checkbox id="favorite-always-add"    label="&pref.FavAlwaysAdd;"/>
+                    <checkbox id="favorite-play-on-load"  label="&pref.FavPlayOnLoad;"
+                        oncommand="com.spikesource.tg4w.tg4woptions.disableFavoritePlayOnLoadAsk();"/>
+                    <hbox class="indent">
+                        <checkbox id="favorite-play-on-load-ask"
+                            label="&pref.FavAskBeforePlay;"/>
+                    </hbox>
+                </groupbox>
+
+                <groupbox>
+                    <caption label="&pref.Debug;" class="prefHeader"/>
+                    <checkbox id="debug-display-messages" label="&pref.DisplayDebugMessages;"/>
+                    <checkbox id="debug-hilight-objects"  label="&pref.HilightObjects;"/>
+                    <checkbox id="debug-hilight-intermediate-objects"  label="&pref.HilightObjectsWhileSearching;"/>
+                </groupbox>
+
+                <!--
+                <groupbox>
+                    <caption label="&pref.tablabel.Deprecated;" class="prefHeader"/>
+                    <vbox>
+                        <checkbox id="show-in-toolbar"     label="&pref.ShowInToolbar;"/>
+                        <checkbox id="show-old-editor"     label="&pref.ShowOldEditor;"/>
+                    </vbox>
+                </groupbox>
+                -->
+            </tabpanel>
+        </tabpanels>
+    </tabbox>
+</dialog>
