@@ -1,0 +1,21 @@
+.reportactionlist {
+    color:gray;
+}
+
+.reportactionlist listitem[selected] {
+    background-color:green;
+}
+
+.pass {
+    color:green;
+}
+
+.fail {
+    background-color:red;
+    color:white;
+}
+
+.pending {
+    background-color:orange;
+    color:black;
+}

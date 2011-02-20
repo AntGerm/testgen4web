@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="1.0.2">
+    <datasets>
+    </datasets>
+    <actions>
+        <action type="goto" refresh="." window="." step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://www.tizag.com/javascriptT/javascriptprompt.php]]></value>
+        </action>
+        <action type="verify-title" window="." step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Javascript Tutorial - Prompt]]></value>
+        </action>
+        <action type="click" window="." step="2">
+            <xpath><![CDATA[*/TABLE[3]/TBODY[1]/TR[1]/TD[2]/TABLE[1]/TBODY[1]/TR[1]/TD[1]/DIV[4]/INPUT[@TYPE="button" and @VALUE="Say my name!"]]]></xpath>
+            <value><![CDATA[null]]></value>
+        </action>
+        <action type="prompt" window="." step="3">
+            <xpath><![CDATA[Hey there, good looking stranger! What's your name?]]></xpath>
+            <value><![CDATA[true,blah]]></value>
+        </action>
+        <action type="alert" window="." step="4">
+            <xpath><![CDATA[-]]></xpath>
+            <value><![CDATA[Nice to see you around these parts blah!]]></value>
+        </action>
+        <action type="click" window="." step="5">
+            <xpath><![CDATA[*/TABLE[3]/TBODY[1]/TR[1]/TD[2]/TABLE[1]/TBODY[1]/TR[1]/TD[1]/DIV[4]/INPUT[@TYPE="button" and @VALUE="Say my name!"]]]></xpath>
+            <value><![CDATA[null]]></value>
+        </action>
+        <action type="prompt" window="." step="6">
+            <xpath><![CDATA[Hey there, good looking stranger! What's your name?]]></xpath>
+            <value><![CDATA[true,]]></value>
+        </action>
+        <action type="alert" window="." step="7">
+            <xpath><![CDATA[-]]></xpath>
+            <value><![CDATA[Nice to see you around these parts !]]></value>
+        </action>
+        <action type="click" window="." step="8">
+            <xpath><![CDATA[*/TABLE[3]/TBODY[1]/TR[1]/TD[2]/TABLE[1]/TBODY[1]/TR[1]/TD[1]/DIV[4]/INPUT[@TYPE="button" and @VALUE="Say my name!"]]]></xpath>
+            <value><![CDATA[null]]></value>
+        </action>
+        <action type="prompt" window="." step="9">
+            <xpath><![CDATA[Hey there, good looking stranger! What's your name?]]></xpath>
+            <value><![CDATA[false,]]></value>
+        </action>
+        <action type="alert" window="." step="10">
+            <xpath><![CDATA[-]]></xpath>
+            <value><![CDATA[Nice to see you around these parts !]]></value>
+        </action>
+    </actions>
+</tg4w>

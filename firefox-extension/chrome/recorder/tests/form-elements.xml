@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="1.0.2">
+    <datasets>
+    </datasets>
+    <actions>
+        <action type="goto" refresh="." window="." step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://www.echoecho.com/htmlforms15.htm]]></value>
+        </action>
+        <action type="verify-title" window="." step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Forms : Quick Reference - HTML Tutorial]]></value>
+        </action>
+        <action type="fill" window="." step="2">
+            <xpath><![CDATA[*/FORM[2]/*/TEXTAREA[@NAME="longtext"]]]></xpath>
+            <value><![CDATA[text area]]></value>
+        </action>
+        <action type="fill" window="." step="3">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@TYPE="text" and @NAME="shorttext"]]]></xpath>
+            <value><![CDATA[single line]]></value>
+        </action>
+        <action type="fill" window="." step="4">
+            <xpath><![CDATA[*/FORM[2]/*/TEXTAREA[@NAME="longtext"]]]></xpath>
+            <value><![CDATA[text area
+multiple lines
+third]]></value>
+        </action>
+        <action type="fill" window="." step="5">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@TYPE="password" and @NAME="password"]]]></xpath>
+            <value><![CDATA[pass]]></value>
+        </action>
+        <action type="check" window="." step="6">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@TYPE="checkbox" and @NAME="Checkbox1"]]]></xpath>
+            <value><![CDATA[true]]></value>
+        </action>
+        <action type="check" window="." step="7">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@TYPE="checkbox" and @NAME="Checkbox3"]]]></xpath>
+            <value><![CDATA[true]]></value>
+        </action>
+        <action type="check" window="." step="8">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@TYPE="checkbox" and @NAME="Checkbox1"]]]></xpath>
+            <value><![CDATA[false]]></value>
+        </action>
+        <action type="check" window="." step="9">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@TYPE="checkbox" and @NAME="Checkbox2"]]]></xpath>
+            <value><![CDATA[true]]></value>
+        </action>
+        <action type="click" window="." step="10">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@NAME="radiobutton" and @VALUE="radiobutton2"]]]></xpath>
+            <value><![CDATA[radiobutton]]></value>
+        </action>
+        <action type="click" window="." step="11">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@NAME="radiobutton" and @VALUE="radiobutton3"]]]></xpath>
+            <value><![CDATA[radiobutton]]></value>
+        </action>
+        <action type="click" window="." step="12">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@NAME="radiobutton" and @VALUE="radiobutton1"]]]></xpath>
+            <value><![CDATA[radiobutton]]></value>
+        </action>
+        <action type="select" window="." step="13">
+            <xpath><![CDATA[*/FORM[2]/*/SELECT[@NAME="dropdownmenu"]]]></xpath>
+            <value><![CDATA[Cheese]]></value>
+        </action>
+        <action type="select" window="." step="14">
+            <xpath><![CDATA[*/FORM[2]/*/SELECT[@NAME="dropdownmenu"]]]></xpath>
+            <value><![CDATA[Milk]]></value>
+        </action>
+        <action type="click" window="." step="15">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@NAME="resetbutton" and @VALUE="Reset"]]]></xpath>
+            <value><![CDATA[resetbutton]]></value>
+        </action>
+        <action type="click" window="." step="16">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@NAME="submitbutton" and @VALUE="Submit"]]]></xpath>
+            <value><![CDATA[submitbutton]]></value>
+        </action>
+        <action type="alert" window="." step="17">
+            <xpath><![CDATA[-]]></xpath>
+            <value><![CDATA[The submit button is disabled on this page.]]></value>
+        </action>
+        <action type="click" window="." step="18">
+            <xpath><![CDATA[*/FORM[2]/*/INPUT[@NAME="image"]]]></xpath>
+            <value><![CDATA[image]]></value>
+        </action>
+        <action type="alert" window="." step="19">
+            <xpath><![CDATA[-]]></xpath>
+            <value><![CDATA[The button image is disabled on this page.]]></value>
+        </action>
+    </actions>
+</tg4w>

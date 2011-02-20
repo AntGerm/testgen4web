@@ -1,0 +1,111 @@
+<!ENTITY menu.label.Verify              "Verify">
+<!ENTITY menu.label.VerifySelectedText  "Assert Text">
+<!ENTITY menu.label.VerifyPageTitle     "Assert Page Title">
+<!ENTITY menu.label.AssertTextNotPresent "Assert Text Not Present">
+<!ENTITY menu.label.Debug               "Debug">
+<!ENTITY menu.label.WhatIsThis          "What is this?">
+<!ENTITY menu.label.FindMe              "Find me">
+<!ENTITY button.tooltip.ReviewEditSteps "Review/Edit Steps">
+<!ENTITY button.label.ReviewEditSteps   "Edit Steps">
+<!ENTITY button.tooltip.ReviewEditStepsOld "Deprecated: Review/Edit Steps - Old way">
+<!ENTITY button.label.ReviewEditStepsOld   "Edit-Old">
+<!ENTITY button.tooltip.Debug           "Debug">
+<!ENTITY button.label.Debug             "Debug">
+<!ENTITY button.label.SelfTest          "Load All Tests">
+<!ENTITY button.tooltip.SelfTest        "Load All Tests">
+<!ENTITY button.tooltip.Record          "Start Record">
+<!ENTITY button.label.Record            "Record">
+<!ENTITY button.tooltip.Connect         "Connect">
+<!ENTITY button.label.Connect           "Connect to a friend">
+<!ENTITY button.tooltip.Server          "Server">
+<!ENTITY button.label.Server            "Server">
+<!ENTITY button.tooltip.Stop            "Stop">
+<!ENTITY button.label.Stop              "Stop">
+<!ENTITY button.tooltip.Pause           "Pause">
+<!ENTITY button.label.Pause             "Pause">
+<!ENTITY button.tooltip.Play            "Play">
+<!ENTITY button.label.Play              "Play">
+<!ENTITY button.tooltip.Loop            "No Loop">
+<!ENTITY button.label.Loop              "No Loop">
+<!ENTITY button.tooltip.Save            "Save">
+<!ENTITY button.label.Save              "Save">
+<!ENTITY button.tooltip.Open            "Open Recoding">
+<!ENTITY button.label.Open              "Open">
+<!ENTITY button.tooltip.Preferences     "Preferences">
+<!ENTITY button.label.Preferences       "Preferences">
+<!ENTITY button.label.Reset             "Reset">
+<!ENTITY button.tooltip.ResetAll        "Reset All">
+<!ENTITY button.label.Favorites         "Favorites">
+<!ENTITY button.tooltip.Favorites       "Load file">
+<!ENTITY toolbar.name                   "TestGen4Web Control">
+<!ENTITY button.tooltip.SpikeSourceInc  "SpikeSource Inc. (http://www.spikesource.com)">
+<!ENTITY label.value.TestGen4Web        "TestGen4Web">
+<!ENTITY button.label.FavManage         "Manage (TODO)">
+<!ENTITY button.tooltip.FavManage       "Manage Favorites">
+<!ENTITY button.label.FavCleanup        "Auto cleanup">
+<!ENTITY button.tooltip.FavCleanup      "Cleanup files which do not exist">
+
+<!ENTITY button.tooltip.Upload          "Test Upload Service">
+<!ENTITY button.label.Upload            "Test Upload">
+<!ENTITY button.label.CreateTUSArchive  "Create Test Archive">
+<!ENTITY button.tooltip.CreateTUSArchive "Create Archive which can be uploaded to SpikeSource Test Upload Service ">
+<!ENTITY button.label.HelpTUS           "What is this?">
+<!ENTITY button.tooltip.HelpTUS         "Help on SpikeSource Test Upload Service">
+
+<!ENTITY button.label.Report              "Test Report">
+<!ENTITY button.tooltip.Report            "View Test Report">
+<!ENTITY button.label.Help              "Help">
+<!ENTITY button.tooltip.Help            "Help">
+<!ENTITY button.label.Automate          "Automate">
+<!ENTITY button.tooltip.Automate        "Automate">
+<!ENTITY button.label.About             "About">
+<!ENTITY button.tooltip.About           "About">
+
+<!ENTITY about.title.About              "About TestGen4Web">
+<!ENTITY about.label.About              "About">
+<!ENTITY about.description              "TestGen4Web Description">
+
+<!ENTITY pref.button.Reset              "Reset">
+<!ENTITY pref.label.Record              "Recording">
+<!ENTITY pref.label.Play                "Play">
+<!ENTITY pref.label.View                "View">
+<!ENTITY pref.ScrollToObjectWhenFound   "Scroll to object when found">
+<!ENTITY pref.Delay                     "Delay (ms)">
+<!ENTITY pref.Simplified                "Save simplified recording. (No XPath) - TODO">
+<!ENTITY pref.IgnoreXpathId             "Ignore IDs on elements when recording">
+<!ENTITY pref.MaxWaitTime               "Max wait time for page to load (ms)">
+<!ENTITY pref.ViewLabelsWithToolbarButtons "View labels with toolbar buttons">
+<!ENTITY pref.ViewPlayProgressBar       "View play progress bar">
+<!ENTITY pref.Debug                     "Debug">
+<!ENTITY pref.DisplayDebugMessages      "Display debug messages on javascript console">
+<!ENTITY pref.HilightObjects            "Hilight objects when found">
+<!ENTITY pref.HilightObjectsWhileSearching "Hilight objects when searching (more clutter)">
+<!ENTITY pref.VerifyLink                "Verify links">
+<!ENTITY pref.VerifyPageTitles          "Verify page titles">
+<!ENTITY pref.title.RecorderPreferences "Recorder Preferences">
+<!ENTITY pref.Favorites                 "Favorites">
+<!ENTITY pref.FavDontAsk                "Don't ask me to save">
+<!ENTITY pref.FavAlwaysAdd              "Always add (no prompt)">
+<!ENTITY pref.FavPlayOnLoad             "Auto play on load">
+<!ENTITY pref.FavAskBeforePlay          "Ask before play">
+<!ENTITY pref.NotANumber                "Not a number">
+<!ENTITY pref.tooltip.IncrementVariable "Use up/down arrow to change value, ctrl/shift to control the increment slower/faster.">
+<!ENTITY pref.DoFancyTyping             "Do fancy typing">
+<!ENTITY pref.FancyTypingInterval       "Fancy typing interval">
+<!ENTITY pref.FancyTyping               "Fancy typing">
+<!ENTITY pref.tablabel.General          "General">
+<!ENTITY pref.tablabel.Advanced         "Advanced">
+<!ENTITY pref.tablabel.Fancy            "Fancy">
+
+<!ENTITY pref.tablabel.Deprecated                "Deprecated">
+<!ENTITY pref.ShowInToolbar             "Show testgen4web in toolbar.">
+<!ENTITY pref.ShowOldEditor             "Show old editor">
+<!ENTITY pref.AlwaysShow                "Always Show">
+
+<!ENTITY recordconfirm.label.ConfirmMessage     "Some recording already exists. Selecting">
+<!ENTITY recordconfirm.label.ConfirmMessageDescribeOK     "'OK' will resume recording">
+<!ENTITY recordconfirm.label.ConfirmMessageDescribeReset  "'Reset' will reset and start recording fresh">
+<!ENTITY recordconfirm.label.ConfirmMessageDescribeCancel "'Cancel' will cancel the recording action">
+<!ENTITY recordconfirm.label.header.Cofirm      "Confirm">
+<!ENTITY recordconfirm.button.label.Reset       "Reset">
+<!ENTITY recordconfirm.title.Confirm            "Confirm">

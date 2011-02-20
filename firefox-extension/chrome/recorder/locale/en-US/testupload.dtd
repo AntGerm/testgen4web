@@ -1,0 +1,23 @@
+<!ENTITY tus.title.CreateArchive "Test Upload Service - Create Archive">
+<!ENTITY tus.caption.TestSuiteName "Test Suite Name">
+<!ENTITY tus.caption.TestSuiteNameDescription "A name that best describes the current recording.">
+<!ENTITY tus.caption.DestinationDirectory "Destination Directory">
+<!ENTITY tus.caption.DestinationDirectoryDescription "Temporary directory where the files will be created.">
+<!ENTITY tus.button.label.SelectDirectory "Select">
+<!ENTITY tus.caption.ServicesUsed "Services Used">
+<!ENTITY tus.caption.ServicesUsedDescription "Services will be started and stopped before and after the tests respectively.">
+<!ENTITY tus.button.label.Apache "Apache HTTPD">
+<!ENTITY tus.button.label.Tomcat "Tomcat">
+<!ENTITY tus.button.label.Mysql "MySQL">
+<!ENTITY tus.button.label.Postgresql "PostgreSQL">
+<!ENTITY tus.button.label.JBoss "JBoss">
+<!ENTITY tus.button.label.OpenLDAP "Open-LDAP">
+<!ENTITY tus.caption.TomcatWebApplication "Tomcat Web-Application Details">
+<!ENTITY tus.caption.TomcatWebApplicationDescription "The web application (.war) and config file (.xml) to be deployed on tomcat.">
+<!ENTITY tus.button.label.SelectWarFile "Select .war">
+<!ENTITY tus.button.label.SelectXmlFile "Select .xml">
+<!ENTITY tus.caption.ApacheWebApplication "Apache Web-Application Details">
+<!ENTITY tus.caption.ApacheWebApplicationDescription "The web application to be deployed on apache web-server.">
+<!ENTITY tus.button.label.SelectApacheWebAppDir "Select">
+<!ENTITY tus.DestinationDirectoryNeeded "Destination directory cannot be blank">
+<!ENTITY tus.PathInvalid "Specified path is invalid">

@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?> 
+<?xml-stylesheet href="chrome://recorder/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://recorder/locale/overlay.dtd">
+<?xul-overlay href="chrome://recorder/content/testgen4webOverlay.xul"?>
+<?xul-overlay href="chrome://recorder/content/tg4wOverlay.xul"?>
+
+<!--
+Copyright(c) 2004-2005, SpikeSource Inc. All Rights Reserved.
+Licensed under the Open Software License version 2.1
+(See www.spikesource.com/license.html)
+
+author: Vinay Srini (vsrini@spikesource.com)
+-->
+
+<overlay id="recorder-overlay"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+    <script type="application/x-javascript" src="setupnamespace.js"/>
+    <script type="application/x-javascript" src="version.js"/>
+    <script type="application/x-javascript" src="common.js"/>
+    <script type="application/x-javascript" src="dialoghandler.js"/>
+    <script type="application/x-javascript" src="predicate.js"/>
+    <script type="application/x-javascript" src="findobject.js"/>
+    <script type="application/x-javascript" src="options.js"/>
+    <script type="application/x-javascript" src="action.js"/>
+    <script type="application/x-javascript" src="reporting.js"/>
+    <script type="application/x-javascript" src="recorder.js"/>
+    <script type="application/x-javascript" src="dataset.js"/>
+    <script type="application/x-javascript" src="overlay.js"/>
+    <script type="application/x-javascript" src="dumbxpath.js"/>
+
+    <popup id="contentAreaContextMenu">
+        <menu id="record-context-menu" style="display:none;" label="Record" position="1">
+            <menupopup>
+                <menuitem label="&menu.label.Verify;" class="recordstep" disabled="true"/>
+                <menuitem id="verify-sel-text"
+                    oncommand="com.spikesource.tg4w.recorder.redirectNextOnclickAction(com.spikesource.tg4w.recorder.verifySelectedText, 'Select text now!');"
+                    label="&menu.label.VerifySelectedText;"/>
+                <menuitem id="assert-text-not-present"
+                    oncommand="com.spikesource.tg4w.recorder.assertTextNotPresent();"
+                    label="&menu.label.AssertTextNotPresent;"/>
+                <menuitem id="verify-page-title"
+                    oncommand="com.spikesource.tg4w.recorder.verifyPageTitle('.');"
+                    label="&menu.label.VerifyPageTitle;"/>
+                <menuseparator/>
+
+                <menuitem label="&menu.label.Debug;" class="recordstep" disabled="true"/>
+                <menuitem id="what-is-this"
+                    oncommand="com.spikesource.tg4w.recorder.whatIs();"
+                    label="&menu.label.WhatIsThis;"/>
+                <menuitem id="find-me"
+                    oncommand="com.spikesource.tg4w.recorder.findMe();"
+                    label="&menu.label.FindMe;"/>
+                <menuseparator/>
+            </menupopup>
+        </menu>
+    </popup>
+
+    <!--
+    <broadcasterset id="mainBroadcasterSet"> 
+        <broadcaster id="tg4wSyncBrowser" 
+            label="&button.label.Server;"
+            autoCheck="false"
+            type="checkbox"
+            group="sidebar"
+            sidebarurl="chrome://recorder/content/sync-browser.xul"
+            sidebartitle="&button.label.Server;"/>
+    </broadcasterset>
+    -->
+
+    <vbox insertbefore="status-bar" id="appcontent">
+        <splitter id="tg4wresizer" resizeafter="newrecordeditor" collapsed="true"/>
+        <vbox persist="collapse,hidden" id="inline-tg4w">
+            <toolbar id="recordtoolbar"/>
+            <hbox collapsed="true" persist="height" id="newrecordeditor" height="300px;"
+                onresize="com.spikesource.tg4w.recorder.saveInlineEditorHeight();"/>
+        </vbox>
+    </vbox>
+
+    <statusbar id="status-bar">
+        <statusbarpanel id="tg4wStatusBarPanel">
+            <toolbarbutton tooltiptext="TestGen4Web" id="tg4w-statusbar-icon" onclick="com.spikesource.tg4w.recorder.toggleInlineEditor();" image="chrome://recorder/skin/record-spike.png"/>
+        </statusbarpanel>
+    </statusbar>
+</overlay>

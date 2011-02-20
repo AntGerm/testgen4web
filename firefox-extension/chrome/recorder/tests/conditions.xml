@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="1.2.0">
+    <datasets>
+    </datasets>
+    <actions>
+        <action type="goto" refresh="." window="." step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://www.w3schools.com/TAGS/tryit.asp?filename=tryhtml_textarea]]></value>
+        </action>
+        <action type="verify-title" window="." step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Tryit Editor v1.4]]></value>
+        </action>
+        <action type="condition-eq" step="2">
+            <xpath><![CDATA[2]]></xpath>
+            <value><![CDATA[3]]></value>
+        </action>
+        <action type="fill" window="." step="3">
+            <xpath><![CDATA[*/FORM[1]/TEXTAREA[@ID="pre_code"]]]></xpath>
+            <value><![CDATA[test]]></value>
+        </action>
+        <action type="end" step="4">
+            <xpath><![CDATA[]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="condition-eq" step="5">
+            <xpath><![CDATA[2]]></xpath>
+            <value><![CDATA[2]]></value>
+        </action>
+        <action type="fill" window="." step="6">
+            <xpath><![CDATA[*/FORM[1]/TEXTAREA[@ID="pre_code"]]]></xpath>
+            <value><![CDATA[2 equals 2]]></value>
+        </action>
+        <action type="end" step="7">
+            <xpath><![CDATA[]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="setvar-counter-num" window="." step="8">
+            <xpath><![CDATA[4]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="condition-eq" step="9">
+            <xpath><![CDATA[counter]]></xpath>
+            <value><![CDATA[4]]></value>
+        </action>
+        <action type="fill" window="." step="10">
+            <xpath><![CDATA[*/FORM[1]/TEXTAREA[@ID="pre_code"]]]></xpath>
+            <value><![CDATA[counter equals 4]]></value>
+        </action>
+        <action type="end" step="11">
+            <xpath><![CDATA[]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="condition-ne" step="12">
+            <xpath><![CDATA[counter]]></xpath>
+            <value><![CDATA[5]]></value>
+        </action>
+        <action type="fill" window="." step="13">
+            <xpath><![CDATA[*/FORM[1]/TEXTAREA[@ID="pre_code"]]]></xpath>
+            <value><![CDATA[counter not equals 5 but is equals to ${counter}]]></value>
+        </action>
+        <action type="end" step="14">
+            <xpath><![CDATA[]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="setvar-counter-num" window="." step="15">
+            <xpath><![CDATA[counter + 2]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="fill" window="." step="16">
+            <xpath><![CDATA[*/FORM[1]/TEXTAREA[@ID="pre_code"]]]></xpath>
+            <value><![CDATA[counter value = ${counter}]]></value>
+        </action>
+    </actions>
+</tg4w>

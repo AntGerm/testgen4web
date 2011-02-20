@@ -1,0 +1,68 @@
+.mainToolbar {
+}
+
+.newstepmenu {
+    font-size:11px;
+}
+
+.newstepmenuitem {
+    font-size:11px;
+}
+
+.newstepmenuitemheader {
+    font-size:11px;
+    color:blue;
+    border-bottom:1px solid blue;
+}
+
+.editorbutton {
+    color:blue;
+}
+
+.borderbottom {
+    border-bottom:1px solid gray;
+}
+
+.prefCaption {
+    font-size:11px;
+    font-family:monospace;
+}
+
+.textbox {
+    font-size:11px;
+}
+
+.controlbutton, .banner {
+    color:#000;
+}
+
+.controlbutton[disabled] {
+    color:#999;
+}
+
+.banner, .status {
+    padding:2px 0px 0px 0px;
+}
+
+.banner {
+    font-weight:bold;
+}
+
+.helptext, .status {
+    font-style:italic;
+    color:#333;
+}
+
+.status {
+    width:200px;
+    /*font-family: monospace;*/
+}
+
+.progressbar {
+    margin: 4px;
+    width:100px;
+    display:none;
+}
+
+.toolbarClass {
+}

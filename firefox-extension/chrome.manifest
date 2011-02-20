@@ -1,0 +1,7 @@
+overlay	chrome://browser/content/browser.xul	chrome://recorder/content/overlay.xul
+content	recorder chrome/recorder/content/
+
+locale	recorder en-US	chrome/recorder/locale/en-US/
+
+skin	recorder classic/1.0	chrome/recorder/skin/
+style	chrome://recorder/skin/overlay.xul	chrome://recorder/skin/overlay.css

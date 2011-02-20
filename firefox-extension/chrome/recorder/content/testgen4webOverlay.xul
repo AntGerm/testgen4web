@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<?xul-overlay href="chrome://recorder/content/edit-overlay.xul"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://recorder/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://recorder/locale/overlay.dtd">
+
+<overlay id="tg4w-edit-overlay" title="TestGen4Web" flex="1"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+    <script type="application/x-javascript" src="steps.js"/>
+    <script>
+        function showIpAddress() {
+        var host = prompt("enter name:", "certification.intel.com");
+        com.spikesource.tg4w.recorder.setStatus('ip:' + (new com.spikesource.tg4w.Common()).resolveIpAddress(host));
+        (new com.spikesource.tg4w.Common()).flushDnsCache();
+        }
+    </script>
+
+    <toolbar accesskey="r"
+             chromeclass="chromeclass-toolbar" position="4"
+             hidden="true"
+             context="toolbar-context-menu"
+             customizable="false"
+             fullscreentoolbar="true"
+             pack="start"
+             class="chromeclass-toolbar" id="recordtoolbar"
+             toolbarname="&toolbar.name;"
+             inherits="collapsed,hidden"
+             mode="icons"
+             persist="collapsed,hidden"
+             defaultset="recordertoolbaritem">
+
+        <hbox class="borderbottom" flex="1">
+            <toolbarbutton flex="1"
+                           tooltiptext="&button.tooltip.SpikeSourceInc;"
+                           image="chrome://recorder/skin/spike.png"
+                           oncommand="window.open('http://www.spikesource.com')"/>
+            <box flex="1" orient="vertical" valign="middle" autostretch="never">
+                <label class="banner" id="banner" value="&label.value.TestGen4Web;"/>
+            </box>
+
+            <toolbarseparator/>
+            <!--
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Connect;"
+                label="&button.label.Connect;"
+                image="chrome://recorder/skin/server_connect.png"
+                id="connect-menu"
+                oncommand="com.spikesource.tg4w.recorder.connect(event);"/>
+            -->
+
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Record;"
+                           label="&button.label.Record;"
+                           image="chrome://recorder/skin/record.png"
+                           id="start-record-menu"
+                           oncommand="com.spikesource.tg4w.recorder.start(event);com.spikesource.tg4w.recorder.resetMenu();"/>
+
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Stop;"
+                           label="&button.label.Stop;"
+                           image="chrome://recorder/skin/stop.png"
+                           id="stop-record-menu"
+                           oncommand="com.spikesource.tg4w.recorder.stop('Toolbar button pressed.');com.spikesource.tg4w.recorder.resetMenu();"/>
+
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Pause;"
+                           label="&button.label.Pause;"
+                           image="chrome://recorder/skin/pause.png"
+                           id="pause-menu"
+                           oncommand="com.spikesource.tg4w.recorder.pause();com.spikesource.tg4w.recorder.resetMenu();"/>
+
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Play;"
+                           label="&button.label.Play;"
+                           image="chrome://recorder/skin/play.png"
+                           id="play-menu"
+                           oncommand="com.spikesource.tg4w.recorder.loopCount = 0;com.spikesource.tg4w.recorder.replay(event);com.spikesource.tg4w.recorder.resetMenu();"/>
+
+            <toolbarbutton class="controlbutton" tooltiptext="&button.label.Loop;"
+                           image="chrome://recorder/skin/loop_none.png"
+                           label="&button.label.Loop;" id="loop"
+                           oncommand="com.spikesource.tg4w.recorder.updateLoopState();"/>
+
+            <!--
+            <toolbarbutton class="controlbutton" tooltiptext="&button.label.Loop;"
+                image="chrome://recorder/skin/ip.png"
+                label="Show IP" id="ip" oncommand="showIpAddress();"/>
+            -->
+
+            <toolbarseparator/>
+
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Save;"
+                           label="&button.label.Save;"
+                           id="save-script-menu"
+                           image="chrome://recorder/skin/save.png"
+                           oncommand="com.spikesource.tg4w.recorder.write2file(event);com.spikesource.tg4w.recorder.resetMenu();"/>
+
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Open;"
+                           label="&button.label.Open;"
+                           id="load-script-menu"
+                           image="chrome://recorder/skin/open.png"
+                           oncommand="com.spikesource.tg4w.recorder.load(event);com.spikesource.tg4w.recorder.resetMenu();"/>
+
+            <toolbarseparator/>
+
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Preferences;"
+                           label="&button.label.Preferences;"
+                           image="chrome://recorder/skin/preferences.png"
+                           id="set-options"
+                           oncommand="window.openDialog('chrome://recorder/content/options.xul', 'gtbOptions', 'modal,centerscreen,chrome,resizable=no');com.spikesource.tg4w.recorder.resetMenu();"/>
+
+            <toolbarbutton
+                    label="&button.label.Reset;"
+                    tooltiptext="&button.tooltip.ResetAll;"
+                    image="chrome://recorder/skin/reset.png"
+                    oncommand="com.spikesource.tg4w.recorder.reset(event);com.spikesource.tg4w.recorder.resetMenu();"/>
+
+            <toolbarbutton
+                    label="&button.label.Favorites;"
+                    tooltiptext="&button.tooltip.Favorites;"
+                    image="chrome://recorder/skin/favorites.png"
+                    type="menu" container="true">
+                <menupopup id="favorites-list">
+                    <menuitem id="manage-favorites" label="&button.label.FavManage;"
+                              tooltiptext="&button.tooltip.FavManage;"
+                              disabled="true"/>
+                    <menuitem id="manage-favorites" label="&button.label.FavCleanup;"
+                              tooltiptext="&button.tooltip.FavCleanup;"
+                              oncommand="com.spikesource.tg4w.recorder.cleanupFavorites();"/>
+                    <menuseparator id="favorites-menu-separator"/>
+                </menupopup>
+            </toolbarbutton>
+
+            <!--
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Server;"
+                label="&button.label.Server;"
+                image="chrome://recorder/skin/srv.gif"
+                id="start-server-menu"
+                oncommand="toggleSidebar('tg4wSyncBrowser');"/>
+            -->
+
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Report;"
+                           label="&button.tooltip.Report;"
+                           id="spike-test-report-menu"
+                           image="chrome://recorder/skin/report.png"
+                           oncommand="com.spikesource.tg4w.recorder.viewReport(gBrowser);">
+            </toolbarbutton>
+
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Help;"
+                           label="&button.tooltip.Help;"
+                           id="spike-test-help-menu"
+                           type="menu" container="true"
+                           image="chrome://recorder/skin/help.gif">
+
+                <menupopup id="upload-commands">
+                    <!--
+                    <menuitem id="tg4w-translate-help" label="&button.label.Automate;"
+                        class="menuitem-iconic"
+                        image="chrome://recorder/skin/help.gif"
+                        tooltiptext="&button.tooltip.Automate;"
+                        oncommand="com.spikesource.tg4w.recorder.openUrlInNewTab(gBrowser, 'http://developer.spikesource.com/wiki/index.php?title=Projects:TestGen4WebDocs');"/>
+                    -->
+
+                    <menu label="Self Tests">
+                        <menupopup id="tg4w-selftests-menu">
+                            <menuitem id="tg4w-alltests" label="&button.label.SelfTest;"
+                                class="menuitem-iconic"
+                                image="chrome://recorder/skin/test.png"
+                                tooltiptext="&button.tooltip.SelfTest;"
+                                oncommand="com.spikesource.tg4w.recorder.runUnitTest();"/>
+
+                            <menuitem id="tg4w-alltests" label="Show Tests Folder"
+                                class="menuitem-iconic"
+                                image="chrome://recorder/skin/test.png"
+                                tooltiptext="Show Tests Folder"
+                                oncommand="com.spikesource.tg4w.recorder.showTestsFolder();"/>
+                            <menuseparator id="tg4w-selftests-menu-separator"/>
+                        </menupopup>
+                    </menu>
+
+                    <menuitem id="tg4w-help" label="&button.label.Help;"
+                              class="menuitem-iconic"
+                              image="chrome://recorder/skin/help.gif"
+                              tooltiptext="&button.tooltip.Help;"
+                              oncommand="com.spikesource.tg4w.recorder.openUrlInNewTab(gBrowser, 'http://dev.spikesource.com/wiki/index.php/Projects:TestGen4Web');"/>
+                </menupopup>
+
+            </toolbarbutton>
+
+            <progressmeter id="play-progress" mode="determined" value="0" class="progressbar"/>
+            <label id="play-progress-text" value="0"/>
+
+            <toolbarseparator/>
+
+            <box flex="1" orient="vertical" valign="middle" autostretch="never">
+                <label class="status" id="status-label" value="Ready"/>
+            </box>
+            <toolbarspring/>
+            <toolbarbutton id="inline-minimize-button" hidden="true" collapsed="true"
+                           image="chrome://recorder/skin/minimize.png" tooltiptext="Hide Editor"
+                           label="Hide" oncommand="com.spikesource.tg4w.recorder.toggleInlineEditSteps();"/>
+
+            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.ReviewEditSteps;"
+                           image="chrome://recorder/skin/edit.png"
+                           label="&button.label.ReviewEditSteps;"
+                           id="review-steps-new"
+                           oncommand="com.spikesource.tg4w.recorder.toggleInlineEditSteps();"/>
+
+            <toolbarbutton id="inline-close-button"
+                           image="chrome://recorder/skin/x.png" tooltiptext="Close"
+                           label="Close" oncommand="com.spikesource.tg4w.recorder.toggleInlineEditor();"/>
+        </hbox>
+    </toolbar>
+</overlay>

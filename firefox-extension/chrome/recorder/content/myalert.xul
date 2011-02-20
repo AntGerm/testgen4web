@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?> 
+
+<!--
+Copyright(c) 2004-2005, SpikeSource Inc. All Rights Reserved.
+Licensed under the Open Software License version 2.1
+(See www.spikesource.com/license.html)
+ 
+author: Vinay Srini (vsrini@spikesource.com)
+-->
+
+<dialog id="myAlert"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="Javascript Alert - Playing"
+    height="100"
+    width="300"
+    onload="replaceText();"
+    flex="1">
+    
+    <script>
+        var delay = window.arguments[0].delay;
+        var text = window.arguments[0].text;
+        var alertType = window.arguments[0].alertType;
+
+
+        function closeWindow() {
+            window.close();
+        }
+
+        function replaceText() {
+            document.getElementById("alert-type").value=alertType;
+            document.getElementById("alert-text").value=text;
+            setTimeout("closeWindow()", delay);
+        }
+    </script>
+
+    <vbox>
+        <label style="font-weight:bold;color:blue;" id="alert-type" value="Type of dialog"/>
+        <label id="alert-text" value="dialog text"/>
+    </vbox>
+
+    <button style="display:none;" disabled="true" id="accept-button" dlgtype="accept"/>
+    <button style="display:none;" disabled="true" id="cancel-button" dlgtype="cancel"/>
+</dialog>

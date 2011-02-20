@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="1.0.2">
+    <actions>
+        <action type="setvar-counter-num" window="." step="0">
+            <xpath><![CDATA[1;]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" label="start" window="." step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Google]]></value>
+        </action>
+        <action type="loop-condition-le" step="2">
+            <xpath><![CDATA[counter]]></xpath>
+            <value><![CDATA[2]]></value>
+        </action>
+        <action type="goto" refresh="." window="." step="3">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[http://www.google.com/]]></value>
+        </action>
+        <action type="fill" window="." step="4">
+            <xpath><![CDATA[*/FORM[@NAME="f"]/*/INPUT[@NAME="q"]]]></xpath>
+            <value><![CDATA[test ${counter}]]></value>
+        </action>
+        <action type="setvar-counter-num" window="." step="5">
+            <xpath><![CDATA[counter + 1;]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="click" refresh="." window="." step="6">
+            <xpath><![CDATA[*/FORM[@NAME="f"]/*/INPUT[@NAME="btnG" and @VALUE="Google Search"]]]></xpath>
+            <value><![CDATA[btnG]]></value>
+        </action>
+        <action type="end" step="7">
+            <xpath><![CDATA[]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" window="." step="8">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[test - Google Search]]></value>
+        </action>
+    </actions>
+</tg4w>
