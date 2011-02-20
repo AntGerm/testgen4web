@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.40.0">
+    <actions>
+        <action type="goto" refresh="true" step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://localhost:9099/test/unittest/htmlpages/alert-confirm/index.html]]></value>
+        </action>
+        <action type="verify-title" step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="click" step="2">
+            <xpath><![CDATA[*/A[@CDATA="Alert"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="alert" step="3">
+            <xpath><![CDATA[-]]></xpath>
+            <value><![CDATA[my alert]]></value>
+        </action>
+        <action type="click" step="4">
+            <xpath><![CDATA[*/A[@CDATA="Test Confirm"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="confirm" refresh="true" step="5">
+            <xpath><![CDATA[ok to jump to page, cancel to stay]]></xpath>
+            <value><![CDATA[true]]></value>
+        </action>
+        <action type="verify-title" step="6">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="click" refresh="true" step="7">
+            <xpath><![CDATA[*/A[@CDATA="Back to page1"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="8">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="click" step="9">
+            <xpath><![CDATA[*/A[@CDATA="Test Confirm"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="confirm" step="10">
+            <xpath><![CDATA[ok to jump to page, cancel to stay]]></xpath>
+            <value><![CDATA[false]]></value>
+        </action>
+    </actions>
+</tg4w>

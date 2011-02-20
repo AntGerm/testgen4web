@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.40.0">
+    <actions>
+        <action type="goto" refresh="true" step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://localhost:9099/test/unittest/htmlpages/frames/index.html]]></value>
+        </action>
+        <action type="verify-title" step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="fill" frame="c2tpage1,tpage1" step="2">
+            <xpath><![CDATA[*/FORM[@NAME="test"]/INPUT[@NAME="testme"]]]></xpath>
+            <value><![CDATA[Vinay]]></value>
+        </action>
+        <action type="click" refresh="true" frame="c2tpage1,tpage1" step="3">
+            <xpath><![CDATA[*/FORM[@NAME="test"]/INPUT[@TYPE="submit"and @VALUE="Submit"]]]></xpath>
+            <value><![CDATA[null]]></value>
+        </action>
+        <action type="verify-title" step="4">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+    </actions>
+</tg4w>

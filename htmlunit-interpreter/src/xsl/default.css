@@ -1,0 +1,120 @@
+/**
+ * Copyright(c) 2004-2005, SpikeSource Inc. All Rights Reserved.
+ * Licensed under the Open Software License version 2.1
+ * (See http://www.spikesource.com/license/oslicense.html)
+ *
+ * author: Vinay Srini (vsrini@spikesource.com)
+ */
+h1, h2, h3 {
+    font-weight: bold;
+    color: #2364aa;
+    clear: both;
+}
+h1 {
+    margin: 1em 0 0 0;
+    padding: 0 0 0.5em 0;
+    font-size: 110%;
+}
+
+.arrow {
+    color:green;
+    text-decoration:none;
+}
+
+h2 {
+    margin: 0.5em 0;
+    font-size: 105%;
+}
+.logINFO {
+    color:#991199;
+}
+.logDEBUG {
+    color:gray;
+}
+.logWARNING {
+    color:#cc0d00;
+}
+.logERROR {
+    font-weight:bold;
+    color:white;
+    background-color:#ee4141;
+}
+.logFATAL {
+    color:red;
+}
+pre {
+    background-color:#ffffdf;
+}
+.outfiles a {
+    color:darkgreen;
+}
+.outfiles {
+    color:darkgreen;
+    border-bottom:1px dotted lightgray;
+}
+.step {
+    width:100%;
+}
+.testdetail {
+    width:100%;
+}
+.stephead {
+    border:1px dotted green;
+}
+.stepdetails {
+    width:100%;
+}
+.stepjump {
+    border:1px solid black;
+    width:100%;
+}
+.stepjump td {
+    width:10px;
+    text-align:center;
+}
+.stepjump a {
+    color:green;
+}
+
+.mainsummary th {
+    background-color:lightgray;
+    text-align:center;
+}
+.mainsummary td {
+    text-align:center;
+}
+.mainsummary {
+    border:1px solid green;
+    width:100%;
+}
+
+.testsummary th {
+    background-color:lightgray;
+    text-align:center;
+}
+
+.testsummary td {
+    text-align:center;
+    border-bottom:1px dotted gray;
+}
+
+.testsummary td {
+    text-align:center;
+    border-bottom:1px dotted gray;
+}
+
+.testsummary {
+    border:1px solid blue;
+    width:100%;
+}
+
+.fatal {
+    background-color:#ff4e4e;
+}
+.error {
+    background-color:#ffc175;
+}
+.footer {
+    font-size: 70%;
+    text-align:right;
+}

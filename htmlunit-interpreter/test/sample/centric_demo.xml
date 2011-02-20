@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.40.0">
+    <actions>
+        <action type="goto" step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://sn-patch16.spikesource.com:8080/centric/index.jsp]]></value>
+        </action>
+        <action type="verify-title" step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Centric CRM]]></value>
+        </action>
+        <action type="fill" step="2">
+            <xpath><![CDATA[*/FORM[@NAME="login"]/*/INPUT[@TYPE="text" and @NAME="username"]]]></xpath>
+            <value><![CDATA[root]]></value>
+        </action>
+        <action type="fill" step="3">
+            <xpath><![CDATA[*/FORM[@NAME="login"]/*/INPUT[@TYPE="password" and @NAME="password"]]]></xpath>
+            <value><![CDATA[spike123]]></value>
+        </action>
+        <action type="click" refresh="true" step="4">
+            <xpath><![CDATA[*/FORM[@NAME="login"]/*/INPUT[@NAME="action"and @VALUE="Login"]]]></xpath>
+            <value><![CDATA[action]]></value>
+        </action>
+        <action type="verify-title" step="5">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Centric CRM: My Home Page]]></value>
+        </action>
+        <action type="click" refresh="true" step="6">
+            <xpath><![CDATA[*/TABLE[2]/TBODY[1]/TR[2]/TD[5]/A[@CDATA="Accounts"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="7">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Centric CRM: Accounts]]></value>
+        </action>
+        <action type="click" refresh="true" step="8">
+            <xpath><![CDATA[*/FORM[@NAME="searchAccount"]/INPUT[@TYPE="submit"and @VALUE="Search"]]]></xpath>
+            <value><![CDATA[null]]></value>
+        </action>
+        <action type="verify-title" step="9">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Centric CRM: Accounts]]></value>
+        </action>
+        <action type="click" refresh="true" step="10">
+            <xpath><![CDATA[*/TABLE[1]/TBODY[1]/TR[1]/TH[1]/A[@CDATA="Logout"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="11">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Centric CRM]]></value>
+        </action>
+        <action type="fill" step="12">
+            <xpath><![CDATA[*/FORM[@NAME="login"]/*/INPUT[@TYPE="text" and @NAME="username"]]]></xpath>
+            <value><![CDATA[root]]></value>
+        </action>
+        <action type="fill" step="13">
+            <xpath><![CDATA[*/FORM[@NAME="login"]/*/INPUT[@TYPE="password" and @NAME="password"]]]></xpath>
+            <value><![CDATA[spike123]]></value>
+        </action>
+        <action type="click" refresh="true" step="14">
+            <xpath><![CDATA[*/FORM[@NAME="login"]/*/INPUT[@NAME="action"and @VALUE="Login"]]]></xpath>
+            <value><![CDATA[action]]></value>
+        </action>
+        <action type="verify-title" step="15">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Centric CRM: My Home Page]]></value>
+        </action>
+        <action type="click" refresh="true" step="16">
+            <xpath><![CDATA[*/TABLE[2]/TBODY[1]/TR[2]/TD[5]/A[@CDATA="Accounts"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="17">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Centric CRM: Accounts]]></value>
+        </action>
+        <action type="click" refresh="true" step="18">
+            <xpath><![CDATA[*/TABLE[3]/TBODY[1]/TR[1]/TD[1]/TABLE[1]/TBODY[1]/TR[1]/TD[4]/A[@CDATA="Search"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="19">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Centric CRM: Accounts]]></value>
+        </action>
+        <action type="click" refresh="true" step="20">
+            <xpath><![CDATA[*/FORM[@NAME="searchAccount"]/INPUT[@TYPE="submit"and @VALUE="Search"]]]></xpath>
+            <value><![CDATA[null]]></value>
+        </action>
+        <action type="verify-title" step="21">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Centric CRM: Accounts]]></value>
+        </action>
+        <action type="click" refresh="true" step="22">
+            <xpath><![CDATA[*/TABLE[1]/TBODY[1]/TR[1]/TH[1]/A[@CDATA="Logout"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="23">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Centric CRM]]></value>
+        </action>
+    </actions>
+</tg4w>

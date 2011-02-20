@@ -1,0 +1,417 @@
+#!/bin/bash
+# Copyright(c) 2004-2005, SpikeSource Inc. All Rights Reserved.
+# Licensed under the Open Software License version 2.1
+#
+# (See http://www.spikesource.com/license/oslicense.html)
+#
+# author: Vinay Srini (vsrini@spikesource.com)
+
+#internal flags
+error=
+INFO_MSG=1
+DEBUG_MSG=0
+JAVA_COMPATIBLE="1.4"
+
+#commands
+runUnittest=
+runTests=
+runReport=
+runClean=
+noEasyHttps=
+enableUI=
+enableCaching=
+thinkTime=
+unittestServerPort=9099
+noCompile=
+datasetMap=
+
+#defaults overridden by cmd line
+java_home=${JAVA_HOME}
+debugLevel="INFO"
+pattern="*.xml"
+
+#input
+inputDir=
+inputFiles=
+outputDir=
+
+my_banner() {
+    echo "**************************"
+    echo $*
+    echo "**************************"
+}
+
+err_msg() {
+    echo "ERROR: $*"
+    error=true
+}
+
+getTime() {
+    echo ""
+}
+
+info_msg() {
+    [ "${INFO_MSG}" -eq 1 ] && echo "INFO: `getTime` $*"
+}
+
+debug_msg() {
+    [ "${DEBUG_MSG}" -eq 1 ] && echo "DEBUG: `getTime` $*"
+}
+
+showHelp() {
+#********0*********0*********0*********0*********0*********0*********0*******8
+#    --enable-ui             Enable swing ui to monitor runs
+    cat << EOF
+Usage ${0} [options] command[s]
+
+  Options:
+
+    --input-dir=<dir>       Directory to find input files
+                            * Mandatory for --run and --report,
+                              unless --input-files is specified
+
+    --pattern=<pattern>     Pattern of files to find [default:*.xml]
+
+    --input-files=<files>   Comma seperated test files list
+                            * Mandatory for --run and --report,
+                              unless --input-dir is specified
+
+    --dataset-map=<file>    Dataset map file.
+                            (a sample in the 'config' directory)
+                              
+    --output-dir=<dir>      Directory to output reports
+                            * Mandatory for --run and --report
+
+    --java-home=<dir>       Java Home [default: env.JAVA_HOME]
+
+    --no-easy-https         Don't use fake https
+
+    --enable-caching        Enable caching of js files between requests
+
+    --think-time=<x>        time interval between clicks in milliseconds
+
+    --debug-level=<level>   Debug level
+                            * One of: 'ERROR', 'WARNING', 'INFO', 'DEBUG',
+                              'CONSOLE', 'CRAZY'
+                            * Console by default gets WARNING and ERROR,
+                              unless level is 'CONSOLE' or 'CRAZY'
+                            * CRAZY as the name suggests spews out too much
+                              log to the console. dare to try ? ;-)
+                            * Default log is [DEBUG]
+                            * Log name is case-*insensitive* ie., DEBUG=deBuG
+                            * invalid log names are ignored.
+
+    --no-compile            If you are sure that everything is compiled
+
+    --start-unittest-server Starts the unittest java server
+
+    --stop-unittest-server  Stops the unittest server
+
+    --version               Display version and quit
+
+  Commands:
+    --unittest -t           Run Unit-tests
+    --run      -r           Run tests
+    --gen      -g           Generate standalone tests
+    --clean    -c           Clean (deletes build, and test/report dirs)
+    --report                Generates html report
+    --help     -h           This help text
+
+
+  Examples:
+  # run test by selecting input files of your choice
+  ${0} 
+        --input-files=test/test1/test1.xml,test/test3.xml.my \\
+        --output-dir=debug-dir                               \\
+        --run
+
+  # run the unit tests
+  ${0} --unittest
+
+  Note on running unitests:
+  Please make sure that you have a php enabled webserver symlinked to the
+  tests directory.
+
+  Eg. ln -s `pwd`/test /opt/apache2/htdocs/
+
+EOF
+#********0*********0*********0*********0*********0*********0*********0*******8
+}
+
+paramValue() {
+    echo $1 | grep '=' > /dev/null 2>&1 && \
+		local l_val=`echo $1 | sed -e 's/^--.*=//'`
+    echo "${l_val}"
+}
+
+parseCmdLine() {
+    while [ "${1}" ]; do
+        arg=$1
+        param=`echo ${arg} | sed -e 's/=.*//'`
+        case ${param} in
+            --input-dir)     inputDir=`paramValue ${arg}`;;
+            --pattern)       pattern=`paramValue ${arg}`;; 
+            --input-files)   inputFiles=`paramValue ${arg}`;;
+            --dataset-map)   datasetMap="--dataset-map `paramValue ${arg}`";;
+            --output-dir)    outputDir=`paramValue ${arg}`;;
+            --java-home)     java_home=`paramValue ${arg}`;;
+            --no-compile) noCompile=true;;
+            --no-easy-https) noEasyHttps="--no-easy-https";;
+#            --enable-ui)     enableUI="--enable-ui";;
+            --enable-caching) enableCaching="--enable-caching";;
+            --unittest|-t)   runUnittest=true;;
+            --run|-r)        runTests=true;;
+            --gen|-g)        generateStandaloneTests=true;;
+            --clean|-c)      runClean=true;;
+            --report)        runReport=true;;
+            --debug-level)   debugLevel=`paramValue ${arg}`;;
+            --think-time)    thinkTime="--think-time `paramValue ${arg}`";;
+            --help|-h)       showHelp; exit 0;;
+            --start-unittest-server)    startTestServer=true;;
+            --stop-unittest-server)     stopTestServer=true;;
+            --version-htmlunit) showHtmlUnitVersion=true;;
+            --version)       showVersion=true;;
+            *)               err_msg "Unknown option ${param}";;
+        esac
+        shift
+    done
+}
+
+validateJavaParams() {
+    if [ ! -f ${java} ]; then
+        version=`java -version 2>&1 | head -1 | tr -s " " | cut -f1 -d'.'`
+        if [ "${version}" != "java version \"1" ]; then
+            err_msg "Cannot find ${java}. Please set JAVA_HOME or 'java' is in your path"
+        else
+            java="java"
+        fi
+    fi
+
+    if [ ! -f ${javac} ]; then
+        version=`javac -version 2>&1 | head -1 | tr -s " " | cut -f1 -d'.'`
+        if [ "${version}" != "javac 1" ]; then
+            err_msg "Cannot find ${javac}. Please set JAVA_HOME or make sure 'javac' is in your path"
+        else
+            javac="javac"
+        fi
+    fi
+
+    return ${error}
+}
+
+validateRunParams() {
+    [ -z "${outputDir}" ] && \
+    err_msg "--output-dir is mandatory"
+
+    [ -z "${inputDir}" ] && [ -z "${inputFiles}" ] \
+    && err_msg "either of --input-dir or --input-files is mandatory"
+
+    validateJavaParams
+}
+
+printHtmlUnitVersion() {
+    validateJavaParams
+    compile
+    echo -n "HtmlUnit Version: "
+    ${java} -classpath `calculateClasspath ${libdir}` com.spike.tg4w.common.util.PackageInfoUtil com.gargoylesoftware.htmlunit.Version ImplementationVersion
+    echo ""
+}
+
+printVersion() {
+    echo "TestGen4Web HtmlUnit Interpreter: `cat version | grep "core.version" | cut -f2 -d'='`"
+}
+
+exit_on_error() {
+    [ "${error}" == "true" ] && exit 1
+}
+
+printInput() {
+    echo "InputDir    : ${inputDir}"
+    echo "Pattern     : ${pattern}"
+    echo "InputFiles  : ${inputFiles}"
+}
+
+findFiles() {
+    dir=${1}
+    pattern=${2}
+    find ${dir} -name "${pattern}" | xargs
+}
+
+check_exit_code() {
+    exit_code=$1
+    shift
+    message=$*
+    [ ${exit_code} -ne 0 ] && err_msg ${message} && exit ${exit_code}
+}
+
+compileJava() {
+    my_banner "Compiling Java.."
+    srcdir=${1}
+    dest=${2}
+    classpath=${3}
+    files=`findFiles ${srcdir} "*.java"`
+    cmd="${javac} ${deprecation} -classpath ${classpath} -d ${dest} -source ${JAVA_COMPATIBLE} -g ${files}"
+
+    [ ! -d ${dest} ] && mkdir -p ${dest}
+    debug_msg ${cmd}
+    ${cmd}
+    check_exit_code $? "error compiling java"
+}
+
+compile() {
+    [ -z "${noCompile}" ] && compileJava "src" "build" `calculateClasspath ${libdir}`
+    [ ! -z "${noCompile}" ] && my_banner "Note: compilation skipped by --no-compile option"
+}
+
+# calculate classpath given a dir (find jar files and concatinate with a : (colon)
+calculateClasspath() {
+    dir=${1}
+    path=`find ${dir} -name "*.jar" | xargs`
+    path=`echo ${path} | sed -e 's| |:|g'`
+    path="config:${path}:build"
+#../archive/target/classes:
+    echo ${path}
+}
+
+# function to look for input files
+findInputFiles() {
+    dir=$1
+    pat=$2
+    files=`find ${dir} -maxdepth 1 -type f -name "${pat}" | xargs`
+    echo ${files} | sed -e 's| |,|g'
+}
+
+startUnitTestServer() {
+    validateJavaParams
+    exit_on_error
+    phpExec=`which php 2>/dev/null | head -1 | xargs`
+    if [ -n "${phpExec}" ]; then
+        my_banner "staring unittest server"
+        unittestserver_cp="test/simple-server:test/simple-server/simple-3.1.3.jar"
+        ${javac} -classpath ${unittestserver_cp} test/simple-server/SimpleServer.java
+        ${java}  -classpath ${unittestserver_cp} SimpleServer \
+            ${phpExec} \
+            `pwd` ${unittestServerPort} > unittest-server.log 2>&1 &
+    else
+        echo "ERROR: Could not find any php!. cannot start unittest server"
+        exit 1
+    fi
+}
+
+stopUnitTestServer() {
+    validateJavaParams
+    exit_on_error
+    my_banner "Stopping unittest server"
+    wget -q "http://localhost:${unittestServerPort}/stop-server"
+    rm -f stop-server
+}
+
+#parse command line
+parseCmdLine $*
+
+#see if there are any errors, exit
+[ "${error}" ] && echo "Error parsing input." && showHelp && exit 1
+
+java=${java_home}/bin/java
+javac=${java_home}/bin/javac
+
+[ "${startTestServer}" ] && startUnitTestServer && exit 0
+[ "${stopTestServer}" ] && stopUnitTestServer && exit 0
+[ "${showHtmlUnitVersion}" ] && printHtmlUnitVersion && exit 0
+[ "${showVersion}" ] && printVersion && exit 0
+
+[ -z "${runUnittest}" ] && \
+[ -z "${runClean}" ] && \
+[ -z "${runTests}" ] && \
+[ -z "${generateStandaloneTests}" ] && \
+[ -z "${runReport}" ] && \
+err_msg "No commands specified." && \
+showHelp && exit 0
+
+if [ "${runUnittest}" ]; then
+    inputDir=`pwd`/test/unittest/recording
+    outputDir=`pwd`/test/report
+    runTests=true
+    startUnitTestServer
+fi
+
+if [ "${runClean}" ]; then
+    my_banner "Running clean.."
+    echo "Deleting build directory.."
+    rm -fr build
+    echo "Deleting test/report directory.."
+    rm -fr test/report
+    rm -f velocity.log
+    rm -f run.log
+fi
+
+function jarlibrary() {
+    dest=$1
+    jar -cf ${dest}/htmlunit-interpreter.jar -C build .
+}
+
+if [ "${generateStandaloneTests}" ]; then
+    validateRunParams
+    exit_on_error
+    compile
+    [ -z "${inputFiles}" ] && inputFiles=`findInputFiles ${inputDir} "${pattern}"`
+    [ ! -d ${outputDir} ] && mkdir -p ${outputDir}
+    [ ! -d ${outputDir}/src ] && mkdir -p ${outputDir}/src
+    [ ! -d ${outputDir}/lib ] && mkdir -p ${outputDir}/lib
+    [ ! -d ${outputDir}/frozenfiles ] && mkdir -p ${outputDir}/frozenfiles
+
+    jarlibrary ${outputDir}/lib/
+    my_banner "Generating tests.."
+    ${java} -classpath `calculateClasspath ${libdir}` \
+        com.spike.tg4w.htmlunit.StandaloneTestGenerator \
+        --input-files ${inputFiles} \
+        --gen-dir ${outputDir} \
+        --test-prefix T \
+        --debug-level ${debugLevel} \
+
+    echo "Copying supporting libraries.."
+    cp -ruf lib ${outputDir}
+    cp -ruf src/xsl ${outputDir}/src/
+    echo ""
+    my_banner "Note: Please cleanup with .svn directories if any in \"${outputDir}\" directory"
+fi
+
+if [ "${runTests}" ]; then
+    validateRunParams
+    exit_on_error
+    compile
+    [ -z "${inputFiles}" ] && inputFiles=`findInputFiles ${inputDir} "${pattern}"`
+    [ ! -d ${outputDir} ] && mkdir -p ${outputDir}
+    my_banner "Running Tests.."
+    ${java} -classpath `calculateClasspath ${libdir}` \
+        com.spike.tg4w.htmlunit.HtmlUnitInterpreter \
+        --input-files ${inputFiles} \
+        --debug-dir ${outputDir} \
+        --debug-level ${debugLevel} \
+        ${datasetMap} ${noEasyHttps} ${enableUI} ${enableCaching} ${thinkTime}
+
+    my_banner "Xml Report: ${outputDir}/tg4w_htmlunit_report.xml"
+
+    runReport=true
+fi
+
+if [ "${runUnittest}" ]; then
+    stopUnitTestServer
+fi
+
+if [ "${runReport}" ]; then
+    validateRunParams
+    exit_on_error
+    my_banner "Generating Report.."
+    cp `pwd`/src/xsl/index.html ${outputDir}
+    cp `pwd`/src/xsl/default.css ${outputDir}
+    ${java} -classpath `calculateClasspath ${libdir}` \
+        com.spike.tg4w.common.util.HtmlReporter \
+        --report-dir ${outputDir} \
+        --xsl-dir `pwd`/src/xsl \
+        --force-generate "false"
+    my_banner "Html Report: ${outputDir}/index.html"
+    echo "Text Summary:"
+    cat ${outputDir}/summary.txt
+    echo "-------------"
+fi

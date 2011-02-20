@@ -1,0 +1,266 @@
+<!--
+Copyright(c) 2004-2005, SpikeSource Inc. All Rights Reserved.
+Licensed under the Open Software License version 2.1
+
+(See http://www.spikesource.com/license/oslicense.html)
+
+author: Vinay Srini (vsrini@spikesource.com)
+-->
+<project default="help">
+    <property name="version.file" value="${basedir}/version"/>
+    <property file="${version.file}"/>
+    <property file="build.properties"/>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="lib/ant/ant-contrib.jar"/>
+        </classpath>
+    </taskdef>
+
+    <path id="classpath">
+        <pathelement location="config"/>
+        <fileset dir="lib/sixpath">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="lib/log4j">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${xalan.lib}">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${htmlunit.lib}">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${velocity.lib}">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement location="${build.dir}"/>
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${unittest.report.dir}"/>
+        <delete dir="dist"/>
+        <delete file="run.log"/>
+        <delete file="velocity.log"/>
+    </target>
+
+    <target name="compile-common">
+        <mkdir dir="${build.dir}"/>
+        <javac source="1.4" deprecation="on" srcdir="src/translator"
+            destdir="${build.dir}" includes="**/common/**"
+            debug="yes" classpathref="classpath"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${build.dir}"/>
+        <javac source="1.4" deprecation="on" srcdir="src/translator"
+            destdir="${build.dir}"
+            debug="yes" classpathref="classpath"/>
+    </target>
+
+    <target name="test-xpath">
+        <java classname="com.spike.tg4w.common.xpath.TG4W_XPathParser" classpathref="classpath"/>
+    </target>
+
+    <target name="findinputfiles" if="input.dir" unless="input.files">
+        <property name="pattern" value="*.xml"/>
+        <echo>Finding files under "${input.dir}" with patterh "${pattern}"</echo>
+        <pathconvert property="input.files" pathsep=",">
+            <path>
+                <fileset dir="${input.dir}" includes="*${pattern}"/>
+            </path>
+        </pathconvert>
+        <echo>Files found: ${input.files}</echo>
+    </target>
+
+    <target name="version" unless="version.target.run">
+        <loadfile property="version.txt" srcFile="version.txt">
+            <filterchain>
+                <expandproperties/>
+            </filterchain>
+        </loadfile>
+        <echo>${version.txt}</echo>
+        <property name="version.target.run" value="true"/>
+    </target>
+
+    <target name="help" depends="version">
+        <loadfile property="help.txt" srcFile="help.txt">
+            <filterchain>
+                <expandproperties/>
+            </filterchain>
+        </loadfile>
+        <echo>${help.txt}</echo>
+    </target>
+
+    <target name="unittest" depends="version">
+        <property name="output.dir" value="${unittest.report.dir}"/>
+        <property name="input.dir" value="test/unittest/recording"/>
+        <mkdir dir="${output.dir}"/>
+        <get src="http://localhost/test/unittest/htmlpages/unittest.php"
+            dest="${output.dir}/test.begin.validate.html"/>
+        <property file="${output.dir}/test.begin.validate.html"/>
+        <fail message="server hosting unittests is not php enabled!" unless="php.enabled.server"/>
+        <antcall target="run"/>
+    </target>
+
+    <target name="run" depends="version,check-htmlunit-version,compile,findinputfiles,readCmdLineParams">
+        <fail unless="input.files">Please specify either input.files or input.dir property. Run "ant help"</fail>
+        <fail unless="output.dir">Please specify output.dir property. Run "ant help"</fail>
+
+        <delete dir="${output.dir}"/>
+        <mkdir dir="${output.dir}"/>
+        <java classname="com.spike.tg4w.htmlunit.HtmlUnitInterpreter" classpathref="classpath" fork="true">
+            <arg line="--input-files ${input.files}"/>
+            <arg line="--debug-dir ${output.dir}"/>
+            <arg line="--debug-level ${debug.level}"/>
+            <arg line="--dataset-map ${dataset.map}"/>
+            <arg line="${noEasyHttps}"/>
+            <arg line="${enableUI}"/>
+            <arg line="${enableCaching}"/>
+            <arg line="${thinkTime}"/>
+        </java>
+        <!--
+        <echo></echo>
+        <echo>You can generate a html-report by using the "report" target.
+            ant report -Doutput.dir=${output.dir}
+        </echo>
+        -->
+        <antcall target="report"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar destfile="${jar.dest.dir}/tg4w-htmlunit-interpreter.jar" basedir="build"/>
+    </target>
+
+    <target name="generate" depends="version,check-htmlunit-version,compile,findinputfiles,readCmdLineParams">
+        <fail unless="input.files">Please specify either input.files or input.dir property. Run "ant help"</fail>
+        <fail unless="output.dir">Please specify output.dir property. Run "ant help"</fail>
+
+        <mkdir dir="${output.dir}/src"/>
+        <mkdir dir="${output.dir}/lib"/>
+        <mkdir dir="${output.dir}/frozenfiles"/>
+        <antcall target="jar">
+            <param name="jar.dest.dir" value="${output.dir}/lib"/>
+        </antcall>
+
+        <java classname="com.spike.tg4w.htmlunit.StandaloneTestGenerator" classpathref="classpath" fork="true">
+            <arg line="--input-files ${input.files}"/>
+            <arg line="--gen-dir ${output.dir}"/>
+            <arg line="--test-prefix T"/>
+        </java>
+
+        <copy todir="${output.dir}/lib">
+            <fileset dir="lib"/>
+        </copy>
+
+        <mkdir dir="${output.dir}/src/xsl"/>
+        <copy todir="${output.dir}/src/xsl">
+            <fileset dir="src/xsl"/>
+        </copy>
+    </target>
+
+    <target name="gen-report" unless="report.target.run">
+        <fail unless="output.dir" message="Please specify output directory with output.dir property"/>
+        <property name="force.re-report" value="false"/>
+
+        <copy todir="${output.dir}" file="src/xsl/index.html"/>
+        <copy todir="${output.dir}" file="src/xsl/default.css"/>
+
+        <java classpathref="classpath"
+            classname="com.spike.tg4w.common.util.HtmlReporter">
+            <arg line="--report-dir ${output.dir}"/>
+            <arg line="--xsl-dir ${basedir}/src/xsl"/>
+            <arg line="--force-generate ${force.re-report}"/>
+        </java>
+
+        <property name="report.target.run" value="true"/>
+    </target>
+
+    <target name="report" depends="gen-report">
+        <loadfile property="summary.text" srcFile="${output.dir}/summary.txt"/>
+        <echo>${summary.text}</echo>
+    </target>
+
+    <target name="create-release" depends="version,clean">
+        <mkdir dir="dist"/>
+        <zip destfile="dist/tg4w-htmlunit-core-${core.version}.zip" followsymlinks="false">
+            <zipfileset dir="${basedir}" prefix="tg4w-htmlunit-${core.version}">
+                <include name="src/**"/>
+                <include name="test/**"/>
+                <include name="lib/ant/**"/>
+                <include name="lib/sixpath/**"/>
+                <include name="lib/xalan/**"/>
+                <include name="config/**"/>
+                <include name="${version.file}"/>
+                <include name="help.txt"/>
+                <include name="version.txt"/>
+                <include name="version"/>
+                <include name="build.xml"/>
+                <exclude name="**/.svn/**"/>
+            </zipfileset>
+        </zip>
+
+        <zip destfile="dist/tg4w-htmlunit-${htmlunit.version}.zip" followsymlinks="false">
+            <zipfileset dir="${basedir}" prefix="tg4w-htmlunit-${core.version}">
+                <include name="lib/htmlunit/*"/>
+                <exclude name="**/.svn/**"/>
+            </zipfileset>
+        </zip>
+    </target>
+
+    <target name="readCmdLineParams">
+        <if>
+            <isset property="no.easy.https"/>
+            <then><property name="noEasyHttps" value="--no-easy-https"/></then>
+            <else><property name="noEasyHttps" value=""/></else>
+        </if>
+        <if>
+            <isset property="enable.ui"/>
+            <then><property name="enableUI" value="--enable-ui"/></then>
+            <else><property name="enableUI" value=""/></else>
+        </if>
+        <if>
+            <isset property="enable.caching"/>
+            <then><property name="enableCaching" value="--enable-caching"/></then>
+            <else><property name="enableCaching" value=""/></else>
+        </if>
+        <if>
+            <isset property="think.time"/>
+            <then><property name="thinkTime" value="--think-time=${think.time}"/></then>
+            <else><property name="thinkTime" value=""/></else>
+        </if>
+    </target>
+
+    <property name="ignore.htmlunit.version" value="true"/>
+    <target name="check-htmlunit-version" depends="compile-common" unless="ignore.htmlunit.version">
+        <java classpathref="classpath"
+            outputproperty="htmlunit.version.output"
+            classname="com.spike.tg4w.common.util.PackageInfoUtil">
+            <arg line="com.gargoylesoftware.htmlunit.Version ImplementationVersion"/>
+        </java>
+
+        <condition property="htmlunit.not.found">
+            <not>
+                <equals arg1="${htmlunit.version.output}" arg2="${htmlunit.version}"/>
+            </not>
+        </condition>
+
+        <if>
+            <or>
+                <isset property="verbose"/>
+                <isset property="htmlunit.not.found"/>
+            </or>
+            <then>
+                <echo>-- Output ------</echo>
+                <echo>'${htmlunit.version.output}'</echo>
+                <echo>----------------</echo>
+                <echo>-- Expecting ---</echo>
+                <echo>'${htmlunit.version}'</echo>
+                <echo>----------------</echo>
+            </then>
+        </if>
+        <fail message="${err.htmlunit.version.mismatch}" if="htmlunit.not.found"/>
+        <echo>Success: htmlunit version: ${htmlunit.version.output} under ${htmlunit.lib}.</echo>
+    </target>
+</project>

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.40.0">
+    <actions>
+        <action type="goto" refresh="true" step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://localhost:9099/test/unittest/htmlpages/alert-confirm/page3.html]]></value>
+        </action>
+        <action type="verify-title" step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="click" refresh="true" step="2">
+            <xpath><![CDATA[*/A[@CDATA="Back to index2"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" refresh="true" step="3">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Page 1]]></value>
+        </action>
+        <action type="verify-title" step="4">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="click" refresh="true" step="5">
+            <xpath><![CDATA[*/A[@CDATA="Back to index2"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" step="6">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Page 1]]></value>
+        </action>
+    </actions>
+</tg4w>

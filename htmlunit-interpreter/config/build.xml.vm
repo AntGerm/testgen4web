@@ -1,0 +1,100 @@
+<project>
+    <property name="lib.dir" value="lib/"/>
+    <property name="debug.level" value="INFO"/>
+    <property name="debug.dir" value="report"/>
+    <property name="output.dir" value="${debug.dir}"/>
+    <property name="no.easy.https" value="false"/>
+    <property name="dataset.map" value="dataset-mapping.prop"/>
+    <property name="think.time" value="0"/>
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="lib/ant/ant-contrib.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="readCmdLineParams">
+        <if>
+            <isset property="no.easy.https"/>
+            <then><property name="noEasyHttps" value="--no-easy-https"/></then>
+            <else><property name="noEasyHttps" value=""/></else>
+        </if>
+        <if>
+            <isset property="enable.ui"/>
+            <then><property name="enableUI" value="--enable-ui"/></then>
+            <else><property name="enableUI" value=""/></else>
+        </if>
+        <if>
+            <isset property="enable.caching"/>
+            <then><property name="enableCaching" value="--enable-caching"/></then>
+            <else><property name="enableCaching" value=""/></else>
+        </if>
+        <if>
+            <isset property="think.time"/>
+            <then><property name="thinkTime" value="--think-time=${think.time}"/></then>
+            <else><property name="thinkTime" value=""/></else>
+        </if>
+    </target>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+        <pathelement location="build"/>
+    </path>
+
+    <target name="compile">
+        <mkdir dir="build"/>
+        <javac srcdir="src" debug="on" destdir="build" classpathref="classpath"/>
+    </target>
+
+    <target name="runall" depends="compile,readCmdLineParams">
+        <mkdir dir="${debug.dir}"/>
+        <java classname="${packageName}.MasterRunner" classpathref="classpath" fork="true">
+            <arg line="--debug-dir ${debug.dir}"/>
+            <arg line="--debug-level ${debug.level}"/>
+            <arg line="--dataset-map ${dataset.map}"/>
+            <arg line="${noEasyHttps}"/>
+            <arg line="${thinkTime}"/>
+        </java>
+
+        <antcall target="report"/>
+    </target>
+
+#foreach($instancename in $instancenames)
+    <target name="run-$instancename" depends="compile,readCmdLineParams">
+        <mkdir dir="${debug.dir}/$instancename"/>
+        <java classname="${packageName}.$instancename" classpathref="classpath" fork="true">
+            <arg line="--debug-dir ${debug.dir}/$instancename"/>
+            <arg line="--debug-level ${debug.level}"/>
+            <arg line="--dataset-map ${dataset.map}"/>
+            <arg line="${noEasyHttps}"/>
+            <arg line="${thinkTime}"/>
+        </java>
+
+        <antcall target="report"/>
+    </target>
+#end
+
+    <target name="gen-report" unless="report.target.run">
+        <fail unless="output.dir" message="Please specify output directory with output.dir property"/>
+        <property name="force.re-report" value="false"/>
+
+        <copy todir="${output.dir}" file="src/xsl/index.html"/>
+        <copy todir="${output.dir}" file="src/xsl/default.css"/>
+
+        <java classpathref="classpath" fork="true"
+            classname="com.spike.tg4w.common.util.HtmlReporter">
+            <arg line="--report-dir ${output.dir}"/>
+            <arg line="--xsl-dir ${basedir}/src/xsl"/>
+            <arg line="--force-generate ${force.re-report}"/>
+        </java>
+
+        <property name="report.target.run" value="true"/>
+    </target>
+
+    <target name="report" depends="gen-report">
+        <loadfile property="summary.text" srcFile="${output.dir}/summary.txt"/>
+        <echo>${summary.text}</echo>
+    </target>
+</project>

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.40.0">
+    <actions>
+        <action type="goto" refresh="true" step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://localhost:9099/test/unittest/htmlpages/single-select/car-survey.php]]></value>
+        </action>
+        <action type="verify-title" step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Car survey]]></value>
+        </action>
+        <action type="select" step="2">
+            <xpath><![CDATA[*/FORM[1]/SELECT[@NAME="mycar"]]]></xpath>
+            <value><![CDATA[bmw]]></value>
+        </action>
+        <action type="click" refresh="true" step="3">
+            <xpath><![CDATA[*/FORM[1]/INPUT[@TYPE="submit"and @VALUE="That's my car"]]]></xpath>
+            <value><![CDATA[null]]></value>
+        </action>
+        <action type="verify-title" step="4">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Car survey bmw]]></value>
+        </action>
+        <action type="select" step="5">
+            <xpath><![CDATA[*/FORM[1]/SELECT[@NAME="mycar"]]]></xpath>
+            <value><![CDATA[mit]]></value>
+        </action>
+        <action type="click" refresh="true" step="6">
+            <xpath><![CDATA[*/FORM[1]/INPUT[@TYPE="submit"and @VALUE="That's my car"]]]></xpath>
+            <value><![CDATA[null]]></value>
+        </action>
+        <action type="verify-title" step="7">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Car survey mit]]></value>
+        </action>
+    </actions>
+</tg4w>

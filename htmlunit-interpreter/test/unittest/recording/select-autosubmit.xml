@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="0.40.0">
+    <actions>
+        <action type="goto" refresh="true" step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://localhost:9099/test/unittest/htmlpages/single-select/car-survey-autosubmit.php]]></value>
+        </action>
+        <action type="verify-title" step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Car survey]]></value>
+        </action>
+        <action type="select" refresh="true" step="2">
+            <xpath><![CDATA[*/FORM[1]/SELECT[@NAME="mycar"]]]></xpath>
+            <value><![CDATA[audi]]></value>
+        </action>
+        <action type="verify-title" step="3">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Car survey audi]]></value>
+        </action>
+        <action type="select" refresh="true" step="4">
+            <xpath><![CDATA[*/FORM[1]/SELECT[@NAME="mycar"]]]></xpath>
+            <value><![CDATA[merc]]></value>
+        </action>
+        <action type="verify-title" step="5">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[Car survey merc]]></value>
+        </action>
+    </actions>
+</tg4w>

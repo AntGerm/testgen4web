@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<tg4w version="1.0-dev">
+    <datasets>
+    </datasets>
+    <actions>
+        <action type="goto" refresh="." window="." step="0">
+            <xpath><![CDATA[window.location.href]]></xpath>
+            <value><![CDATA[http://localhost:9099/test/unittest/htmlpages/multi-windows/multi-window.php]]></value>
+        </action>
+        <action type="verify-title" window="." step="1">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="click" refresh="tg4wnamed1" window="." step="2">
+            <xpath><![CDATA[*/A[@CDATA="open new window"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="verify-title" window="tg4wnamed1" step="3">
+            <xpath><![CDATA[*]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+        <action type="wait-for-ms" step="4">
+            <xpath><![CDATA[]]></xpath>
+            <value><![CDATA[1000]]></value>
+        </action>
+        <action type="click" window="tg4wnamed1" step="5">
+            <xpath><![CDATA[*/A[@CDATA="Close me"]]]></xpath>
+            <value><![CDATA[]]></value>
+        </action>
+    </actions>
+</tg4w>

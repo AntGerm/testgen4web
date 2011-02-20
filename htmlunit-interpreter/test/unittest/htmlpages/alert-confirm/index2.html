@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>Page 1</title>
+        <script>
+        function changePage() {
+            var answer = confirm("ok to change page. cancel to stay.");
+            if (answer) {
+                document.location="page3.html"
+            }
+        }
+
+        </script>
+    </head>
+    <body onload="changePage();">
+        page1
+    </body>
+</html>

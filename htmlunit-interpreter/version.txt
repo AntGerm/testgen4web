@@ -1,0 +1,6 @@
++----------------------------------------------------------------------+
+| http://developer.spikesource.com/wiki/index.php/Projects:TestGen4Web |
++----------------------------------------------------------------------+
+TestGen4Web - HtmlUnit Interpreter
+    Interpreter : ${core.version}
+    HtmlUnit    : ${htmlunit.version}

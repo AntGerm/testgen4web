@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <script>
+        function testAlert() {
+            alert("my alert");
+        }
+        function testConfirm() {
+            var answer = confirm("ok to jump to page, cancel to stay");
+            if (answer) {
+                document.location="page2.html"
+            }
+        }
+        </script>
+    </head>
+    <body>
+        <a href="javascript:testAlert();">Alert</a><br/>
+        <a href="javascript:testConfirm();">Test Confirm</a>
+    </body>
+</html>
