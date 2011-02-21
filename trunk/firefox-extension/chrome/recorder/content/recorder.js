@@ -2024,14 +2024,15 @@ com.spikesource.tg4w.Recorder.prototype.getXpath = function(obj, winref) {
         }
     }
 
-    if (com.spikesource.tg4w.tg4woptions.getRecordMode() == "tg4w_smart") {
+    var recordMode = com.spikesource.tg4w.tg4woptions.getRecordMode();
+    if (recordMode == "tg4w_smart") {
         // find this function in com.spikesource.tg4w.tg4wcommon.js
         xpath = this.findObject.tg4w_default_getXpath(obj, "");
-    } else if (com.spikesource.tg4w.tg4woptions.getRecordMode() == "tg4w_dumb") {
+    } else if (recordMode == "tg4w_dumb") {
         xpath = this.findObject.tg4w_dumb_getXpath(obj);
     } else {
-        com.spikesource.tg4w.recorder.error("Invalid recording mode :" + PLAYER_PLUGIN);
-        throw "Invalid recording mode :" + PLAYER_PLUGIN;
+        com.spikesource.tg4w.recorder.error("Invalid recording mode :" + recordMode);
+        throw "Invalid recording mode :" + recordMode;
     }
     return xpath;
 }
@@ -2039,13 +2040,14 @@ com.spikesource.tg4w.Recorder.prototype.getXpath = function(obj, winref) {
 com.spikesource.tg4w.Recorder.prototype.getElement = function(obj, xpath) {
     // find this function in com.spikesource.tg4w.tg4wcommon.js
     try {
-        if (com.spikesource.tg4w.tg4woptions.getRecordMode() == "tg4w_smart") {
+        var recordMode = com.spikesource.tg4w.tg4woptions.getRecordMode();
+        if (recordMode == "tg4w_smart") {
             return this.findObject.tg4w_default_getObject(/*base object*/ obj, /*parentObject*/ obj, xpath);
-        } else if (com.spikesource.tg4w.tg4woptions.getRecordMode() == "tg4w_dumb") {
+        } else if (recordMode == "tg4w_dumb") {
             return this.findObject.tg4w_dumb_getObject(/*base object*/ obj, /*parentObject*/ obj, xpath);
         } else {
-            com.spikesource.tg4w.recorder.error("Invalid recording mode :" + PLAYER_PLUGIN);
-            throw "Invalid recording mode :" + PLAYER_PLUGIN;
+            com.spikesource.tg4w.recorder.error("Invalid recording mode :" + recordMode);
+            throw "Invalid recording mode :" + recordMode;
         }
     } catch (e) {
         this.log(e);

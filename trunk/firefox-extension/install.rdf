@@ -5,17 +5,17 @@
     <RDF:Description RDF:about="rdf:#$yhbSO1"
         em:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
         em:minVersion="3.5"
-        em:maxVersion="3.6.*" />
+        em:maxVersion="4.0.*" />
     <RDF:Description RDF:about="urn:mozilla:install-manifest"
         em:id="{3c20433a-61bc-42fe-831d-415860e17283}"
-        em:name="TestGen4Web - Script It All"
+        em:name="TestGen4Web - Automate your web tests"
         em:version="1.2"
-        em:homepageURL="http://developer.spikesource.com/wiki/index.php/Projects:TestGen4Web"
-        em:description="Just like your VCR - for Firefox. It records what you do, stores it, and plays it back on demand."
+        em:homepageURL="http://code.google.com/p/testgen4web/wiki/Introduction"
+        em:description="A DVR for firefox. Record your actions, save and play it on demand. Automate your everyday clicks."
         em:creator="Vinay Srini"
         em:optionsURL="chrome://recorder/content/options.xul"
         em:iconURL="chrome://recorder/skin/logo.png"
-        em:updateURL="https://developer.spikesource.com/testgen4web-update.rdf"
+        em:updateURL="https://testgen4web.googlecode.com/files/testgen4web-update.rdf"
         em:type="2">
         <em:contributor>Alessio Pace</em:contributor>
         <em:contributor>Bruno Vernay</em:contributor>
