@@ -1,0 +1,66 @@
+<project default="release">
+    <property name="dist.dir"           value="dist"/>
+    <property name="doc.dir"           value="../doc"/>
+    <property name="extension.dir"   value="../extension"/>
+    <property name="translator.dir"  value="../translator"/>
+
+    <mkdir dir="${dist.dir}"/>
+
+    <target name="release" depends="release-extension,release-translator">
+    </target>
+
+    <property name="exclude.upload" value="**/upload.js"/>
+    <target name="release-extension" depends="change-ext-version">
+        <zip destfile="${dist.dir}/recorder-${ext.version}.xpi"
+            basedir="${extension.dir}"
+            excludes="${exclude.upload}"/>
+    </target>
+
+    <target name="release-translator" depends="change-trans-version">
+        <zip destfile="${dist.dir}/translator.zip" basedir="${translator.dir}" excludes="httpunit-src/**"/>
+    </target>
+
+    <target name="release-htmlunit-interpreter">
+        <property file="../htmlunit-interpreter/version"/>
+        <echo>${core.version}</echo>
+        <echo>${htmlunit.version}</echo>
+        <tar 
+            destfile="dist/htmlunit-interpreter-${core.version}-lib-${htmlunit.version}.tar.gz"
+            compression="gzip">
+            <tarfileset 
+                dir="../htmlunit-interpreter"
+                prefix="tg4w-htmlunit-interpreter-${core.version}-lib-${htmlunit.version}"/>
+        </tar>
+    </target>
+
+    <target name="change-ext-version">
+        <fail unless="ext.version"/>
+
+        <!--
+        const RECORDER_VERSION = "0.34.4";
+        -->
+        <replaceregexp file="${extension.dir}/chrome/recorder/content/version.js"
+            match='const RECORDER_VERSION = "(.*)"' flags="g"
+            replace='const RECORDER_VERSION = "${ext.version}"'>
+        </replaceregexp>
+
+        <replaceregexp file="${extension.dir}/install.rdf"
+            match='em:version="(.*)"' flags="g"
+            replace='em:version="${ext.version}"'>
+        </replaceregexp>
+
+        <replaceregexp file="${doc.dir}/testgen4web-update.rdf"
+            match='&lt;version&gt;.*&lt;/version&gt;' flags="g"
+            replace='&lt;version&gt;${ext.version}&lt;/version&gt;'>
+        </replaceregexp>
+    </target>
+
+    <target name="change-trans-version">
+        <fail unless="trans.version"/>
+
+        <replaceregexp file="${translator.dir}/build.properties"
+            match='translator.version=(.*)' flags="g"
+            replace='translator.version=${trans.version}'>
+        </replaceregexp>
+    </target>
+</project>
