@@ -78,9 +78,17 @@ author: Vinay Srini (vsrini@spikesource.com)
         </vbox>
     </vbox>
 
+    <menupopup id="menu_ToolsPopup">
+        <menuitem id="open_TestGen4Web" label="TestGen4Web"
+            oncommand="com.spikesource.tg4w.recorder.toggleInlineEditor();"/>
+    </menupopup> 
+
     <statusbar id="status-bar">
         <statusbarpanel id="tg4wStatusBarPanel">
-            <toolbarbutton tooltiptext="TestGen4Web" id="tg4w-statusbar-icon" onclick="com.spikesource.tg4w.recorder.toggleInlineEditor();" image="chrome://recorder/skin/record-spike.png"/>
+            <toolbarbutton tooltiptext="TestGen4Web"
+                id="tg4w-statusbar-icon"
+                onclick="com.spikesource.tg4w.recorder.toggleInlineEditor();"
+                image="chrome://recorder/skin/record-spike.png"/>
         </statusbarpanel>
     </statusbar>
 </overlay>

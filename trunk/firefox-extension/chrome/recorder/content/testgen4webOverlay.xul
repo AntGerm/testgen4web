@@ -31,22 +31,9 @@
              defaultset="recordertoolbaritem">
 
         <hbox class="borderbottom" flex="1">
-            <toolbarbutton flex="1"
-                           tooltiptext="&button.tooltip.SpikeSourceInc;"
-                           image="chrome://recorder/skin/spike.png"
-                           oncommand="window.open('http://www.spikesource.com')"/>
             <box flex="1" orient="vertical" valign="middle" autostretch="never">
                 <label class="banner" id="banner" value="&label.value.TestGen4Web;"/>
             </box>
-
-            <toolbarseparator/>
-            <!--
-            <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Connect;"
-                label="&button.label.Connect;"
-                image="chrome://recorder/skin/server_connect.png"
-                id="connect-menu"
-                oncommand="com.spikesource.tg4w.recorder.connect(event);"/>
-            -->
 
             <toolbarbutton class="controlbutton" tooltiptext="&button.tooltip.Record;"
                            label="&button.label.Record;"
